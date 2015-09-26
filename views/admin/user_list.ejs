@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+</head>
+<body>
+<a href="/admin/user/form">添加</a>
+    <table>
+        <thead>
+        <tr>
+            <th>用户名</th>
+            <th>匿名</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% list.forEach(function(item) { %>
+        <tr data-id="<%= item.id %>">
+            <td><%= item.username %></td>
+            <td><%= item.nickname %></td>
+            <td><%= moment(item.create_time).format('YYYY-MM-DD hh:mm:ss') %></td>
+            <td><a href="/admin/user/delete/<%= item.id %>">删除</a>/<a href="/admin/user/form/<%= item.id %>">编辑</a></td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

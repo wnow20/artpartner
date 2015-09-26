@@ -1,0 +1,98 @@
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var favicon = require('static-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var moment = require('moment');
+var admin = require('./admin');
+
+var res = express.response;
+res.message = function (msg, type) {
+    type = type || 'info';
+    var sess = this.req.session;
+    sess.messages = sess.messages || [];
+    sess.messages.push({type: type, string: msg});
+};
+
+var routes = require('./routes');
+var users = require('./routes/user');
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(favicon());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(session({
+    name: 'sid',
+    secret: 'whosyourdaddy'
+}));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/html', express.static(path.join(__dirname, 'html')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+app.locals.moment = moment;
+
+app.use(function (req, res, next) {
+    res.locals.messages = req.session.messages || [];
+    res.locals.removeMessages = function () {
+        req.session.messages = [];
+    };
+    next();
+});
+
+app.use(app.router);
+
+app.use('/admin', function(req, res, next) {
+    if (!req.session.userid) {
+        var redirect = encodeURIComponent(req.url);
+        res.redirect('/login?redirect=' + redirect);
+    }
+    next();
+});
+app.use('/admin', admin);
+app.all('/login', admin.login);
+app.get('/', routes.index);
+
+
+/// catch 404 and forwarding to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
+
+module.exports = app;

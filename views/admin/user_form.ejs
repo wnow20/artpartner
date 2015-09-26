@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+</head>
+<body>
+<form action="/admin/user/submit" method="post">
+    <input type="hidden" name="user[id]" value="<%= user.id %>"/>
+    用户名：<input type="text" name="user[username]" value="<%= user.username %>"/><br/>
+    密码：<input type="password" name="user[password]" value="<%= user.password %>"/><br/>
+    昵称：<input type="text" name="user[nickname]" value="<%= user.nickname %>"/><br/><br/>
+
+    <input type="submit" value="提交"/>
+</form>
+</body>
+</html>

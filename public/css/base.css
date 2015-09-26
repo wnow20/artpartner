@@ -1,0 +1,27 @@
+body {
+    background: #fff;
+    font: 14px/1.5 "Microsoft Yahei", "Hiragino Sans GB", Helvetica, "Helvetica Neue", "微软雅黑", Tahoma, Arial, sans-serif;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+
+    padding-top: 80px;
+    padding-bottom: 60px;
+}
+
+a {
+    color: #444;
+    text-decoration: none;
+}
+a:hover
+a:visited {
+    text-decoration: none;
+}
+
+*,
+:before,
+:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}

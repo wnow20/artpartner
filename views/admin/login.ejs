@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+</head>
+<body>
+<%if(locals.messages){ %>
+    <%messages.forEach(function(message){ %>
+        <p class='<%= message.type%>'><%=message.string %></p>
+    <%})%>
+    <%removeMessages()%>
+<% } %>
+
+<form action="/login" method="post">
+    用户名：<input type="text" name="user[username]"/><br/>
+    密码：<input type="text" name="user[password]"/><br/><br/>
+
+    <input type="submit" value="提交"/>
+</form>
+</body>
+</html>
