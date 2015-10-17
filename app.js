@@ -56,12 +56,13 @@ app.use(app.router);
 app.use('/admin', function(req, res, next) {
     if (!req.session.userid) {
         var redirect = encodeURIComponent(req.url);
-        res.redirect('/login?redirect=' + redirect);
+        return res.redirect('/login?redirect=' + redirect);
     }
     next();
 });
 app.use('/admin', admin);
 app.all('/login', admin.login);
+app.all('/logout', admin.logout);
 app.get('/', routes.index);
 
 

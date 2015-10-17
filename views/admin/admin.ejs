@@ -3,8 +3,104 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title><%= title %></title>
+    <%- include('head') -%>
 </head>
-<body>
-    Hello Admin!
+<body scroll="no">
+<div id="layout">
+    <div id="header">
+        <div class="headerNav">
+            <a class="logo" href="/">标志</a>
+            <ul class="nav">
+                <li><a href="javascript:"><%= principal.username  %>（<%= principal.nickname  %>）</a></li>
+                <li><a href="/logout">退出</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <div id="leftside">
+        <div id="sidebar_s">
+            <div class="collapse">
+                <div class="toggleCollapse">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div id="sidebar">
+            <div class="toggleCollapse"><h2>主菜单</h2>
+
+                <div>收缩</div>
+            </div>
+
+            <div class="accordion" fillSpace="sidebar">
+                <div class="accordionHeader">
+                    <h2>
+                        <span>Folder</span>用户管理
+                    </h2>
+                </div>
+                <div class="accordionContent">
+                    <ul class="tree treeFolder">
+                        <li><a href="user/form/<%= principal.id  %>" target="navTab" rel="user_form">基本信息</a></li>
+                    </ul>
+                </div>
+                <div class="accordionHeader">
+                    <h2>
+                        <span>Folder</span>作品管理
+                    </h2>
+                </div>
+                <div class="accordionContent">
+                    <ul class="tree treeFolder">
+                        <li><a href="tag/list" target="navTab" rel="medicine_list">分类管理</a></li>
+                        <li><a href="/admin/album/list" target="navTab" rel="medicine_list">作品集</a></li>
+                    </ul>
+                </div>
+                <div class="accordionHeader">
+                    <h2>
+                        <span>Folder</span>内容管理
+                    </h2>
+                </div>
+                <div class="accordionContent">
+                    <ul class="tree treeFolder">
+                        <li><a href="/admin/asdf/edit/notice" target="navTab" rel="asdf_list">公示</a></li>
+                        <li><a href="/admin/asdf/edit/aboutus" target="navTab" rel="asdf_list">关于我</a></li>
+                        <li><a href="/admin/asdf/edit/contact" target="navTab" rel="asdf_list">联系</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        <div id="navTab" class="tabsPage">
+            <div class="tabsPageHeader">
+                <div class="tabsPageHeaderContent"><!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
+                    <ul class="navTab-tab">
+                        <li tabid="main" class="main"><a href="javascript:;"><span><span
+                                            class="home_icon">欢迎页</span></span></a></li>
+                    </ul>
+                </div>
+                <div class="tabsLeft">left</div>
+                <!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
+                <div class="tabsRight">right</div>
+                <!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
+                <div class="tabsMore">more</div>
+            </div>
+            <ul class="tabsMoreList">
+                <li><a href="javascript:;">欢迎页</a></li>
+            </ul>
+            <div class="navTab-panel tabsPageContent layoutBox">
+                <div class="page unitBox">
+                    <div class="pageFormContent" layoutH="80" style="margin-right:230px">
+                        欢迎！
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="footer">Copyright &copy; 2015 taotao-tech团队</a>
+    Tel：15158121565
+</div>
 </body>
 </html>

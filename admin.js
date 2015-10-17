@@ -1,6 +1,6 @@
 var express = require('express');
 var moment = require('moment');
-var bcrypt = require('bcrypt');
+//var bcrypt = require('bcrypt');
 var admin = express();
 var userRoute = require('./routes/admin/user');
 
@@ -22,7 +22,12 @@ admin.use(function(req,res,next){
     next();
 });
 
-admin.get('/', function(req, res, next) {
+admin.use(function(req, res, next) {
+    res.locals.principal = req.session ? req.session.principal : {};
+    next();
+});
+
+admin.get('/index', function(req, res, next) {
     res.render('admin/admin', {
         title: '管理主页'
     });
@@ -39,5 +44,6 @@ admin.use(function(req, res, next) {
 });
 
 admin.login = userRoute.login;
+admin.logout = userRoute.logout;
 
 module.exports = admin;

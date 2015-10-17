@@ -1,0 +1,144 @@
+body {
+    background-color: #fff;
+}
+#login-box {
+    width: 300px;
+    height: 260px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -130px;
+    -webkit-animation: login 1s ease-in-out;
+    -moz-animation: login 1s ease-in-out;
+    -ms-animation: login 1s ease-in-out;
+    -o-animation: login 1s ease-in-out;
+    animation: login 1s ease-in-out;
+
+    border: 1px solid #000;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 0 21px 0 rgba(0, 0, 0, .34);
+    -moz-box-shadow: 0 0 21px 0 rgba(0, 0, 0, .34);
+    box-shadow: 0 0 21px 0 rgba(0, 0, 0, .34);
+    padding: 40px 30px;
+}
+
+#login-box label {
+    display: none;
+}
+
+#login-box .message {
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+}
+#login-box input[type="text"],
+#login-box input[type="password"] {
+    border: 1px solid #c6c6c6;
+    height: 40px;
+    border-radius: 7px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+    line-height: 20px;
+    outline: none;
+
+    -webkit-box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, .13);
+    -moz-box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, .13);
+    box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, .13);
+}
+
+#login-box .line {
+    display: block;
+    height: 1px;
+    background-color: #000;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+#login-box .submit {
+    border: 1px solid #d2d2d2;
+    color: #a4a4a4;
+    height: 36px;
+    padding: 8px 20px;
+    background-color: #fff;
+
+    border-radius: 7px;
+    float: right;
+}
+
+/* CSS Animations */
+@keyframes "login" {
+    0% {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        opacity: 0;
+        margin-top: -65px;
+    }
+    100% {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+        margin-top: -130px;
+    }
+
+}
+
+@-moz-keyframes login {
+    0% {
+        filter: alpha(opacity=0);
+        opacity: 0;
+        margin-top: -65px;
+    }
+    100% {
+        filter: alpha(opacity=100);
+        opacity: 1;
+        margin-top: -130px;
+    }
+
+}
+
+@-webkit-keyframes "login" {
+    0% {
+        filter: alpha(opacity=0);
+        opacity: 0;
+        margin-top: -65px;
+    }
+    100% {
+        filter: alpha(opacity=100);
+        opacity: 1;
+        margin-top: -130px;
+    }
+
+}
+
+@-ms-keyframes "login" {
+    0% {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        opacity: 0;
+        margin-top: -65px;
+    }
+    100% {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+        margin-top: -130px;
+    }
+
+}
+
+@-o-keyframes "login" {
+    0% {
+        filter: alpha(opacity=0);
+        opacity: 0;
+        margin-top: -65px;
+    }
+    100% {
+        filter: alpha(opacity=100);
+        opacity: 1;
+        margin-top: -130px;
+    }
+
+}

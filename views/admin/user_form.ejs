@@ -1,17 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title><%= title %></title>
-</head>
-<body>
-<form action="/admin/user/submit" method="post">
-    <input type="hidden" name="user[id]" value="<%= user.id %>"/>
-    用户名：<input type="text" name="user[username]" value="<%= user.username %>"/><br/>
-    密码：<input type="password" name="user[password]" value="<%= user.password %>"/><br/>
-    昵称：<input type="text" name="user[nickname]" value="<%= user.nickname %>"/><br/><br/>
+<h2 class="contentTitle"><%= title %></h2>
 
-    <input type="submit" value="提交"/>
-</form>
-</body>
-</html>
+
+<div class="pageContent">
+
+    <form method="post" action="user/submit" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+        <div class="pageFormContent nowrap" layoutH="97">
+            <input type="hidden" name="user[id]" value="<%= user.id %>"/>
+            <dl>
+                <dt>用户名：</dt>
+                <dd>
+                    <input type="text" name="user[username]" maxlength="20" class="required" value="<%= user.username %>"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt>密码：</dt>
+                <dd>
+                    <input type="text" name="user[password]" class="required" value="<%= user.password %>"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt>昵称：</dt>
+                <dd>
+                    <input type="text" name="user[nickname]" class="required" value="<%= user.nickname %>"/>
+                </dd>
+            </dl>
+
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+
+</div>
+
+
+<script type="text/javascript">
+    function customvalidXxx(element){
+        if ($(element).val() == "xxx") return false;
+        return true;
+    }
+</script>

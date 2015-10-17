@@ -1,5 +1,6 @@
-var bcrypt = require('bcrypt');
+//var bcrypt = require('bcrypt');
 var User = require(process.cwd() + '/lib/user');
+var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 
 exports.list = function(req, res, next) {
     User.list(function(err, list) {
@@ -37,18 +38,29 @@ exports.submit = function(req, res, next) {
     var _user = req.body.user;
     var user = new User(_user);
 
-    bcrypt.genSalt(10, function(err, salt) {
-        user.salt = salt;
-        bcrypt.hash(user.password, salt, function(err, hash) {
-            user.password = hash;
+    user.save(function (err, result) {
+        if (err) return next(err);
 
-            user.save(function(err, result) {
-                if (err) return next(err);
+        var msg = DwzMsg.success('保存成功！');
+        msg.setNavTabId('user_form');
+        msg.setForwardUrl(req.url);
 
-                res.redirect('/admin/user/list');
-            });
-        });
+        res.json(msg);
     });
+
+
+    //bcrypt.genSalt(10, function(err, salt) {
+    //    user.salt = salt;
+    //    bcrypt.hash(user.password, salt, function(err, hash) {
+    //        user.password = hash;
+    //
+    //        user.save(function(err, result) {
+    //            if (err) return next(err);
+    //
+    //            res.redirect('/admin/user/list');
+    //        });
+    //    });
+    //});
 }
 
 exports.delete = function(req, res, next) {
@@ -63,30 +75,49 @@ exports.delete = function(req, res, next) {
 }
 
 exports.login = function(req, res, next) {
-    console.log('req.method');
-    console.log(req.method);
     if ('POST' === req.method) {
         var _user = req.body.user;
-        var user = User.getByUsername(_user.username);
-        var redirect = req.query.redirect;
-        bcrypt.compare(_user.password, user.password, function(err, res) {
-            var url = '/login?redirect=' + redirect;
-            if (res) {
+        User.getByUsername(_user.username, function(err, user) {
+            var redirect = req.query.redirect;
+            if (_user.password === user.password) {
                 req.session.userid = user.id;
+                req.session.principal = user;
                 if (redirect) {
                     res.redirect(decodeURIComponent(redirect));
                 } else {
-                    res.redirect('/admin');
+                    res.redirect('/admin/index');
                 }
-                res.redirect(url);
             } else {
                 res.message('账号或密码错误！', 'error');
-                res.redirect(url);
+                res.redirect('/login');
             }
         });
+
+        //bcrypt.compare(_user.password, user.password, function(err, res) {
+        //    var url = '/login?redirect=' + redirect;
+        //    if (res) {
+        //        req.session.userid = user.id;
+        //        if (redirect) {
+        //            res.redirect(decodeURIComponent(redirect));
+        //        } else {
+        //            res.redirect('/admin');
+        //        }
+        //        res.redirect(url);
+        //    } else {
+        //        res.message('账号或密码错误！', 'error');
+        //        res.redirect(url);
+        //    }
+        //});
     } else {
         res.render('admin/login', {
             title: '登录'
         });
     }
+}
+
+exports.logout = function(req, res, next) {
+    delete req.session.userid;
+    delete req.session.principal;
+
+    res.redirect('/');
 }
