@@ -7,6 +7,8 @@ var User = db.sequelize.define('user', {
     password: { type: Sequelize.STRING },
     nickname: { type: Sequelize.STRING },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+}, {
+    tableName: 'user'
 });
 
 var Tag = db.sequelize.define('tag', {
@@ -14,6 +16,8 @@ var Tag = db.sequelize.define('tag', {
     name: { type: Sequelize.STRING },
     intro: { type: Sequelize.STRING },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+}, {
+    tableName: 'tag'
 });
 
 var Photo = db.sequelize.define('photo', {
@@ -25,6 +29,8 @@ var Photo = db.sequelize.define('photo', {
     middle_url: { type: Sequelize.STRING },
     thumbnail_url: { type: Sequelize.STRING },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+}, {
+    tableName: 'photo'
 });
 
 var Asdf = db.sequelize.define('asdf', {
@@ -33,12 +39,16 @@ var Asdf = db.sequelize.define('asdf', {
     contact: { type: Sequelize.STRING },
     aboutus: { type: Sequelize.STRING },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+}, {
+    tableName: 'asdf'
 });
 
 var Album = db.sequelize.define('album', {
     name: { type: Sequelize.STRING },
     intro: { type: Sequelize.STRING },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+}, {
+    tableName: 'album'
 });
 
 exports.User = User;

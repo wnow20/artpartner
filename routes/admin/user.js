@@ -1,84 +1,79 @@
 //var bcrypt = require('bcrypt');
-var User = require(process.cwd() + '/lib/user');
-var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
+var cwd = process.cwd();
+var Model = require(cwd + '/lib2/model');
+var DwzMsg = require(cwd + '/lib/DwzMsg');
 
-exports.list = function(req, res, next) {
-    User.list(function(err, list) {
-        if (err) return next(err);
+exports.list = function (req, res, next) {
+    var page = req.page;
+    Model.User.findAndCountAll({
+        where: {},
+        offset: page.getOffset(),
+        limit: page.numPerPage
+    }).then(function (result) {
+        console.log(result.count);
+        console.log(result.rows);
 
+        page.setTotalCount(result.count);
         res.render('admin/user_list', {
             title: '用户列表',
-            list: list
+            list: result.rows,
+            page: page
         });
     });
 }
 
-exports.form = function(req, res, next) {
+exports.form = function (req, res, next) {
     var id = req.params.id;
-    var user = {};
 
     if (id != null) {
-        User.get(id, function(err, result) {
-            user = result;
-
+        Model.User.findById(id).then(function (user) {
             res.render('admin/user_form', {
                 title: '用户添加/修改',
                 user: user
             });
         });
     } else {
-        res.render('admin/user_form', {
-            title: '用户添加/修改',
-            user: user
-        });
+        next();
     }
-
 }
 
-exports.submit = function(req, res, next) {
+exports.submit = function (req, res, next) {
     var _user = req.body.user;
-    var user = new User(_user);
+    var id = _user.id;
 
-    user.save(function (err, result) {
-        if (err) return next(err);
+    if (id) {
+        Model.User.findById(id).then(function (user) {
+            user.update(_user).then(function () {
+                var msg = DwzMsg.success('保存成功！');
+                msg.setNavTabId('user_form');
+                msg.setForwardUrl(req.url);
 
-        var msg = DwzMsg.success('保存成功！');
-        msg.setNavTabId('user_form');
-        msg.setForwardUrl(req.url);
-
-        res.json(msg);
-    });
-
-
-    //bcrypt.genSalt(10, function(err, salt) {
-    //    user.salt = salt;
-    //    bcrypt.hash(user.password, salt, function(err, hash) {
-    //        user.password = hash;
-    //
-    //        user.save(function(err, result) {
-    //            if (err) return next(err);
-    //
-    //            res.redirect('/admin/user/list');
-    //        });
-    //    });
-    //});
+                res.json(msg);
+            });
+        });
+    } else {
+        next();
+    }
 }
 
-exports.delete = function(req, res, next) {
+exports.delete = function (req, res, next) {
     var id = req.params.id;
-
-    User.delete(id, function(err, count) {
-        if (err) return next(err);
-
-        res.redirect('/admin/user/list');
-    })
-
+    Model.User.findById(id).then(function (user) {
+        user.destroy().then(function () {
+            res.redirect('/admin/user/list');
+        });
+    });
 }
 
-exports.login = function(req, res, next) {
+exports.login = function (req, res, next) {
     if ('POST' === req.method) {
         var _user = req.body.user;
-        User.getByUsername(_user.username, function(err, user) {
+
+        Model.User.findOne({
+            where: {
+                username: _user.username
+            }
+        }).then(function (user) {
             var redirect = req.query.redirect;
             if (_user.password === user.password) {
                 req.session.userid = user.id;
@@ -93,22 +88,6 @@ exports.login = function(req, res, next) {
                 res.redirect('/login');
             }
         });
-
-        //bcrypt.compare(_user.password, user.password, function(err, res) {
-        //    var url = '/login?redirect=' + redirect;
-        //    if (res) {
-        //        req.session.userid = user.id;
-        //        if (redirect) {
-        //            res.redirect(decodeURIComponent(redirect));
-        //        } else {
-        //            res.redirect('/admin');
-        //        }
-        //        res.redirect(url);
-        //    } else {
-        //        res.message('账号或密码错误！', 'error');
-        //        res.redirect(url);
-        //    }
-        //});
     } else {
         res.render('admin/login', {
             title: '登录'
@@ -116,7 +95,7 @@ exports.login = function(req, res, next) {
     }
 }
 
-exports.logout = function(req, res, next) {
+exports.logout = function (req, res, next) {
     delete req.session.userid;
     delete req.session.principal;
 
