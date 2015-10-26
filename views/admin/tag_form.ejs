@@ -1,0 +1,30 @@
+<div class="pageContent">
+    <form method="post" action="tag/submit" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+        <div class="pageFormContent nowrap" layoutH="56">
+            <input type="hidden" name="tag[id]" value="<%= tag.id %>"/>
+            <p>
+                <label>名称：</label>
+                <input type="text" name="tag[name]" maxlength="20" class="textInput required" size="30" value="<%= tag.name %>"/>
+            </p>
+            <p>
+                <label>介绍：</label>
+                <input type="text" name="tag[intro]" class="textInput required" size="30" value="<%= tag.intro %>"/>
+            </p>
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+
+</div>
+
+
+<script type="text/javascript">
+    function customvalidXxx(element){
+        if ($(element).val() == "xxx") return false;
+        return true;
+    }
+</script>

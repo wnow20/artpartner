@@ -3,6 +3,7 @@ var moment = require('moment');
 //var bcrypt = require('bcrypt');
 var admin = express();
 var userRoute = require('./routes/admin/user');
+var tagRoute = require('./routes/admin/tag');
 
 admin.locals.moment = moment;
 
@@ -32,10 +33,15 @@ admin.get('/index', function(req, res, next) {
         title: '管理主页'
     });
 });
-admin.get('/user/list', userRoute.list);
-admin.get('/user/form/(:id)?', userRoute.form);
+admin.all('/user/list', userRoute.list);
+admin.all('/user/form/(:id)?', userRoute.form);
 admin.post('/user/submit', userRoute.submit);
-admin.get('/user/delete/:id', userRoute.delete);
+admin.all('/user/delete/:id', userRoute.delete);
+
+admin.all('/tag/list', tagRoute.list);
+admin.all('/tag/form/(:id)?', tagRoute.form);
+admin.post('/tag/submit', tagRoute.submit);
+admin.all('/tag/delete/:id', tagRoute.delete);
 
 admin.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');

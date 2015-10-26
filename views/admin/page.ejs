@@ -1,0 +1,15 @@
+<div class="panelBar">
+    <div class="pages">
+        <span>显示</span>
+        <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+            <option value="10" <%= page.numPerPage == 10? 'selected': '' %>>10</option>
+            <option value="20" <%= page.numPerPage == 20? 'selected': '' %>>20</option>
+            <option value="50" <%= page.numPerPage == 50? 'selected': '' %>>50</option>
+            <option value="100" <%= page.numPerPage == 100? 'selected': '' %>>100</option>
+        </select>
+        <span>条，共<%= page.totalCount%>条</span>
+    </div>
+
+    <div class="pagination" targetType="navTab" totalCount="<%= page.totalCount %>" numPerPage="<%= page.numPerPage %>" pageNumShown="<%= page.pageNumShown %>" currentPage="<%= page.currentPage %>"></div>
+
+</div>

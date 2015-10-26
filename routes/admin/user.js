@@ -12,6 +12,7 @@ exports.list = function(req, res, next) {
         });
     });
 }
+
 exports.form = function(req, res, next) {
     var id = req.params.id;
     var user = {};

@@ -69,7 +69,7 @@ body {
 }
 
 /* CSS Animations */
-@keyframes "login" {
+@keyframes login {
     0% {
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         filter: alpha(opacity=0);
@@ -99,7 +99,7 @@ body {
 
 }
 
-@-webkit-keyframes "login" {
+@-webkit-keyframes login {
     0% {
         filter: alpha(opacity=0);
         opacity: 0;
@@ -113,7 +113,7 @@ body {
 
 }
 
-@-ms-keyframes "login" {
+@-ms-keyframes login {
     0% {
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         filter: alpha(opacity=0);
@@ -129,7 +129,7 @@ body {
 
 }
 
-@-o-keyframes "login" {
+@-o-keyframes login {
     0% {
         filter: alpha(opacity=0);
         opacity: 0;
