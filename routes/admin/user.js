@@ -1,18 +1,16 @@
 //var bcrypt = require('bcrypt');
 var cwd = process.cwd();
 var Model = require(cwd + '/lib2/model');
+var Page = require(process.cwd() + '/lib/Page');
 var DwzMsg = require(cwd + '/lib/DwzMsg');
 
 exports.list = function (req, res, next) {
-    var page = req.page;
+    var page = Page.gen(req, res);
     Model.User.findAndCountAll({
         where: {},
         offset: page.getOffset(),
         limit: page.numPerPage
     }).then(function (result) {
-        console.log(result.count);
-        console.log(result.rows);
-
         page.setTotalCount(result.count);
         res.render('admin/user_list', {
             title: '用户列表',

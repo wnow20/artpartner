@@ -1,23 +1,21 @@
+var cwd = process.cwd();
+var Model = require(cwd + '/lib2/model');
 var Tag = require(process.cwd() + '/lib/tag');
-var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 var Page = require(process.cwd() + '/lib/Page');
+var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 
 exports.list = function(req, res, next) {
-    var _tag = req.body.tag;
     var page = Page.gen(req, res);
-
-    Tag.list(_tag, page, function(err, list) {
-        if (err) return next(err);
-
-        Tag.count(function(err, totalCount) {
-            if (err) return next(err);
-            page.totalCount = totalCount;
-
-            res.render('admin/tag_list', {
-                title: '分类列表',
-                list: list,
-                page: page
-            });
+    Model.User.findAndCountAll({
+        where: {},
+        offset: page.getOffset(),
+        limit: page.numPerPage
+    }).then(function (result) {
+        page.setTotalCount(result.count);
+        res.render('admin/tag_list', {
+            title: '分类列表',
+            list: result.rows,
+            page: page
         });
     });
 }
