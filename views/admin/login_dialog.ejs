@@ -1,0 +1,25 @@
+<div class="pageContent">
+
+    <form method="post" action="/login_dialog" class="pageForm" onsubmit="return validateCallback(this, dialogAjaxDone)">
+        <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+        <input style="display:none" type="text" name="fakeusernameremembered">
+        <input style="display:none" type="password" name="fakepasswordremembered">
+        <div class="pageFormContent" layoutH="58">
+            <div class="unit">
+                <label>用户名：</label>
+                <input type="text" id="username" name="user[username]" class="placeholder" placeholder="username">
+            </div>
+            <div class="unit">
+                <label>密码：</label>
+                <input type="password" id="password" name="user[password]" class="placeholder" placeholder="password">
+            </div>
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+
+</div>

@@ -4,6 +4,7 @@ var moment = require('moment');
 var admin = express();
 var userRoute = require('./routes/admin/user');
 var tagRoute = require('./routes/admin/tag');
+var albumRoute = require('./routes/admin/album');
 
 admin.locals.moment = moment;
 
@@ -43,6 +44,11 @@ admin.all('/tag/form/(:id)?', tagRoute.form);
 admin.post('/tag/submit', tagRoute.submit);
 admin.all('/tag/delete/(:id)?', tagRoute.delete);
 
+admin.all('/album/list', albumRoute.list);
+admin.all('/album/form/(:id)?', albumRoute.form);
+admin.post('/album/submit', albumRoute.submit);
+admin.all('/album/delete/(:id)?', albumRoute.delete);
+
 admin.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     res.statusCode = 500;
@@ -50,6 +56,7 @@ admin.use(function(req, res, next) {
 });
 
 admin.login = userRoute.login;
+admin.login_dialog = userRoute.login_dialog;
 admin.logout = userRoute.logout;
 
 module.exports = admin;

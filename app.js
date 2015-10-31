@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var moment = require('moment');
 var admin = require('./admin');
+var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 
 var res = express.response;
 res.message = function (msg, type) {
@@ -55,13 +56,19 @@ app.use(app.router);
 
 app.use('/admin', function(req, res, next) {
     if (!req.session.userid) {
-        var redirect = encodeURIComponent(req.url);
-        return res.redirect('/login?redirect=' + redirect);
+        if (req.xhr) {
+            var msg = new DwzMsg(DwzMsg.TIMEOUT, '登陆超时,请重新登陆!');
+            return res.json(msg);
+        } else {
+            var redirect = encodeURIComponent(req.url);
+            return res.redirect('/login?redirect=' + redirect);
+        }
     }
     next();
 });
 app.use('/admin', admin);
 app.all('/login', admin.login);
+app.all('/login_dialog', admin.login_dialog);
 app.all('/logout', admin.logout);
 app.get('/', routes.index);
 
