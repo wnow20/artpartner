@@ -36,12 +36,12 @@ admin.get('/index', function(req, res, next) {
 admin.all('/user/list', userRoute.list);
 admin.all('/user/form/(:id)?', userRoute.form);
 admin.post('/user/submit', userRoute.submit);
-admin.all('/user/delete/:id', userRoute.delete);
+admin.all('/user/delete/(:id)?', userRoute.delete);
 
 admin.all('/tag/list', tagRoute.list);
 admin.all('/tag/form/(:id)?', tagRoute.form);
 admin.post('/tag/submit', tagRoute.submit);
-admin.all('/tag/delete/:id', tagRoute.delete);
+admin.all('/tag/delete/(:id)?', tagRoute.delete);
 
 admin.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');

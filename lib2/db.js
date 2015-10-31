@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('artpartner', 'root', 'Opslter1', {
-    host: 'localhost',
-    port: 30156,
+    host: 'www.asdfz.cn',
+    port: 3306,
     dialect: 'mysql',
 
     pool: {
@@ -17,4 +17,4 @@ var sequelize = new Sequelize('artpartner', 'root', 'Opslter1', {
 
 module.exports = {
     sequelize: sequelize
-}
+};

@@ -4,8 +4,9 @@ var db = require('./db');
 var User = db.sequelize.define('user', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
     username: { type: Sequelize.STRING },
-    password: { type: Sequelize.STRING },
     nickname: { type: Sequelize.STRING },
+    password: { type: Sequelize.STRING },
+    salt: { type: Sequelize.STRING },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
 }, {
     tableName: 'user'
@@ -44,6 +45,7 @@ var Asdf = db.sequelize.define('asdf', {
 });
 
 var Album = db.sequelize.define('album', {
+    id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
     name: { type: Sequelize.STRING },
     intro: { type: Sequelize.STRING },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
