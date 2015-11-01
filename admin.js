@@ -5,6 +5,7 @@ var admin = express();
 var userRoute = require('./routes/admin/user');
 var tagRoute = require('./routes/admin/tag');
 var albumRoute = require('./routes/admin/album');
+var asdfRoute = require('./routes/admin/asdf');
 
 admin.locals.moment = moment;
 
@@ -48,6 +49,10 @@ admin.all('/album/list', albumRoute.list);
 admin.all('/album/form/(:id)?', albumRoute.form);
 admin.post('/album/submit', albumRoute.submit);
 admin.all('/album/delete/(:id)?', albumRoute.delete);
+
+// 公示,关于我,联系的管理
+admin.all('/asdf/form/:type', asdfRoute.form);
+admin.all('/asdf/submit', asdfRoute.submit);
 
 admin.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');

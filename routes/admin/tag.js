@@ -39,7 +39,7 @@ exports.form = function (req, res, next) {
             tag: tag
         });
     }
-}
+};
 
 exports.submit = function (req, res, next) {
     var _tag = req.body.tag;

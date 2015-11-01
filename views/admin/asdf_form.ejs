@@ -1,0 +1,20 @@
+<% var typeTxt = {notice: '告示', contact: '联系', aboutus: '关于我'};%>
+<h2 class="contentTitle">内容管理 - <%= typeTxt[type]%></h2>
+<div class="pageContent">
+    <form method="post" action="asdf/submit" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+        <div class="pageFormContent nowrap" layoutH="97">
+            <dl>
+                <dt><%= typeTxt[type]%>：</dt>
+                <dd>
+                    <textarea class="editor" tools="simple" name="asdf[<%= type%>]" cols="80" rows="10"><%= asdf[type]%></textarea>
+                </dd>
+            </dl>
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+</div>
