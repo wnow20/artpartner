@@ -30,3 +30,6 @@ node_modules
 # InteliJ IDEA
 *.iml
 .idea/
+upload/
+tmp/
+build/

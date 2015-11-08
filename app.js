@@ -9,6 +9,7 @@ var session = require('express-session');
 var moment = require('moment');
 var admin = require('./admin');
 var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
+var cwd = process.cwd();
 
 var res = express.response;
 res.message = function (msg, type) {
@@ -19,7 +20,6 @@ res.message = function (msg, type) {
 };
 
 var routes = require('./routes');
-var users = require('./routes/user');
 
 var app = express();
 
@@ -31,6 +31,7 @@ app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: cwd +'/tmp' }));
 app.use(cookieParser());
 app.use(session({
     name: 'sid',

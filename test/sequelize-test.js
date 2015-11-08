@@ -1,4 +1,5 @@
 var Sequelize = require('sequelize');
+
 var sequelize = new Sequelize('artpartner', 'root', 'Opslter1', {
     host: 'localhost',
     port: 30156,
@@ -14,6 +15,7 @@ var sequelize = new Sequelize('artpartner', 'root', 'Opslter1', {
         createdAt: 'create_time'
     }
 });
+
 var Employee = sequelize.define('Employee', {
     name:  {
         type     : Sequelize.STRING,

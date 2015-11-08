@@ -7,6 +7,16 @@
                 <input type="text" name="album[name]" maxlength="20" class="textInput required" size="30" value="<%= album.name %>"/>
             </p>
             <p>
+                <label>类别：</label>
+                <select class="combox" name="album[tag_id]">
+                    <option value=""> - 选择类别 - </option>
+                    <% tags.forEach(function (tag) { %>
+                        <% var selected = album.tag_id === tag.id? true : false; %>
+                        <option value="<%= tag.id%>" <%=selected? 'selected' : '' %>><%= tag.name%></option>
+                    <% }); %>
+                </select>
+            </p>
+            <p>
                 <label>介绍：</label>
                 <input type="text" name="album[intro]" class="textInput required" size="30" value="<%= album.intro %>"/>
             </p>

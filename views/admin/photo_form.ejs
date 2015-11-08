@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<style type="text/css" media="screen">
+    .my-uploadify-button {
+        background:none;
+        border: none;
+        text-shadow: none;
+        border-radius:0;
+    }
 
-</body>
-</html>
+    .uploadify:hover .my-uploadify-button {
+        background:none;
+        border: none;
+    }
+
+    .fileQueue {
+        width: 400px;
+        height: 150px;
+        overflow: auto;
+        border: 1px solid #E5E5E5;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="pageContent">
+    <form method="post" action="photo/submit" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return iframeCallback(this, dialogAjaxDone);">
+        <div class="pageFormContent nowrap" layoutH="56">
+            <input type="hidden" name="photo[id]" value="<%= photo.id %>"/>
+            <p>
+                <label>名称：</label>
+                <input type="text" name="photo[name]" maxlength="20" class="textInput required" size="30" value="<%= photo.name %>"/>
+            </p>
+            <p>
+                <label>介绍：</label>
+                <input type="text" name="photo[intro]" class="textInput required" size="30" value="<%= photo.intro %>"/>
+            </p>
+            <p>
+                <label>图片：</label>
+                <input type="file" name="file" />
+            </p>
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+
+</div>
+<script>
+    $(function() {
+        $('#file_upload1').uploadify({
+            'swf'      : '/public/js/dwz-ria/uploadify/scripts/uploadify.swf',
+            'uploader' : 'photo/upload',
+            formData:{PHPSESSID:'xxx', ajax:1},
+            buttonText:'请选择文件',
+            fileSizeLimit:'2000KB',
+            fileTypeDesc:'*.jpg;*.jpeg;*.gif;*.png;',
+            fileTypeExts:'*.jpg;*.jpeg;*.gif;*.png;',
+            auto:true,
+            multi:false,
+            onUploadSuccess:uploadifySuccess,
+            onQueueComplete:uploadifyQueueComplete
+        });
+    });
+</script>

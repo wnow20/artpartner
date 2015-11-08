@@ -14,6 +14,15 @@
                     <label>名称：</label>
                     <input type="text" name="album[name]" value=""/>
                 </li>
+                <li>
+                    <label>类别：</label>
+                    <select class="combox" name="album[tag_id]">
+                        <option value=""> - 选择类别 - </option>
+                        <% tags.forEach(function (tag) { %>
+                        <option value="<%= tag.id%>"><%= tag.name%></option>
+                        <% }); %>
+                    </select>
+                </li>
             </ul>
             <div class="subBar">
                 <ul>
@@ -36,21 +45,24 @@
         <tr>
             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
             <th width="120">名称</th>
+            <th width="120">类别</th>
             <th>介绍</th>
             <th width="160">创建日期</th>
-            <th width="70">操作</th>
+            <th width="160">操作</th>
         </tr>
         </thead>
         <tbody>
         <% list.forEach(function(item) { %>
-        <tr target="sid_user" rel="<%- item.dataValues.id %>">
-            <td><input name="ids" value="<%- item.dataValues.id %>" type="checkbox"></td>
-            <td><%- item.dataValues.name %></td>
-            <td><%- item.dataValues.intro %></td>
-            <td><%- item.dataValues.create_time %></td>
+        <tr target="sid_user" rel="<%= item.id %>">
+            <td><input name="ids" value="<%= item.id %>" type="checkbox"></td>
+            <td><%= item.name %></td>
+            <td><%= item.tag.name %></td>
+            <td><%= item.intro %></td>
+            <td><%= item.create_time %></td>
             <td>
-                <a title="删除" target="ajaxTodo" href="album/delete?ids=<%- item.dataValues.id %>" class="btnDel">删除</a>
-                <a title="编辑" target="dialog" href="album/form/<%- item.dataValues.id %>" class="btnEdit">编辑</a>
+                <a title="删除" target="ajaxTodo" href="album/delete?ids=<%= item.id %>" class="btnDel">删除</a>
+                <a title="编辑" target="dialog" href="album/form/<%= item.id %>" class="btnEdit">编辑</a>
+                <a title="<%= item.name %>照片管理" target="navTab" rel="photo_list" href="photo/list/<%= item.id %>">管理照片</a>
             </td>
         </tr>
         <% }); %>

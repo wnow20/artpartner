@@ -12,6 +12,15 @@ var User = db.sequelize.define('user', {
     tableName: 'user'
 });
 
+var Asdf = db.sequelize.define('asdf', {
+    id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
+    notice: { type: Sequelize.STRING },
+    contact: { type: Sequelize.STRING },
+    aboutus: { type: Sequelize.STRING }
+}, {
+    tableName: 'asdf'
+});
+
 var Tag = db.sequelize.define('tag', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
     name: { type: Sequelize.STRING },
@@ -21,8 +30,19 @@ var Tag = db.sequelize.define('tag', {
     tableName: 'tag'
 });
 
+var Album = db.sequelize.define('album', {
+    id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
+    tag_id: { type: Sequelize.INTEGER },
+    name: { type: Sequelize.STRING },
+    intro: { type: Sequelize.STRING },
+    del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+}, {
+    tableName: 'album'
+});
+
 var Photo = db.sequelize.define('photo', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
+    album_id: { type: Sequelize.INTEGER },
     name: { type: Sequelize.STRING },
     intro: { type: Sequelize.STRING },
     url: { type: Sequelize.STRING },
@@ -34,22 +54,32 @@ var Photo = db.sequelize.define('photo', {
     tableName: 'photo'
 });
 
-var Asdf = db.sequelize.define('asdf', {
-    id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
-    notice: { type: Sequelize.STRING },
-    contact: { type: Sequelize.STRING },
-    aboutus: { type: Sequelize.STRING }
+var AlbumTag = db.sequelize.define('album_tag', {
+    album_id: {
+        type: Sequelize.INTEGER
+    },
+    tag_id: {
+        type: Sequelize.INTEGER
+    }
 }, {
-    tableName: 'asdf'
+    timestamps: false,
+    tableName: 'album_tag'
 });
 
-var Album = db.sequelize.define('album', {
-    id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
-    name: { type: Sequelize.STRING },
-    intro: { type: Sequelize.STRING },
-    del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
-}, {
-    tableName: 'album'
+Tag.hasMany(Album, {
+    foreignKey: 'tag_id'
+});
+
+Album.belongsTo(Tag, {
+    foreignKey: 'tag_id'
+});
+
+Album.hasMany(Photo, {
+    foreignKey: 'album_id'
+});
+
+Photo.belongsTo(Album, {
+    foreignKey: 'album_id'
 });
 
 exports.User = User;

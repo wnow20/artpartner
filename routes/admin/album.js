@@ -7,17 +7,23 @@ exports.list = function (req, res, next) {
     var page = Page.gen(req, res);
     Model.Album.findAndCountAll({
         where: {},
+        include: {
+            model: Model.Tag
+        },
         offset: page.getOffset(),
         limit: page.numPerPage
     }).then(function (result) {
         page.setTotalCount(result.count);
-        result.rows.forEach(function (i) {
-            console.log(i.dataValues);
-        });
-        res.render('admin/album_list', {
-            title: '分类列表',
-            list: result.rows,
-            page: page
+
+        Model.Tag.findAll({
+            where: {}
+        }).then(function (tags) {
+            res.render('admin/album_list', {
+                title: '分类列表',
+                list: result.rows,
+                tags: tags,
+                page: page
+            });
         });
     });
 };
@@ -26,20 +32,26 @@ exports.form = function (req, res, next) {
     var id = req.params.id;
     var album = {};
 
-    if (id != null) {
-        Model.Album.findById(id).then(function (album) {
+    Model.Tag.findAll({
+        where: {}
+    }).then(function (tags) {
+        if (id != null) {
+            Model.Album.findById(id).then(function (album) {
+                res.render('admin/album_form', {
+                    title: '分类添加/修改',
+                    album: album,
+                    tags: tags
+                })
+            });
+        } else {
             res.render('admin/album_form', {
                 title: '分类添加/修改',
-                album: album
-            })
-        });
-    } else {
-        res.render('admin/album_form', {
-            title: '分类添加/修改',
-            album: album
-        });
-    }
-}
+                album: album,
+                tags: tags
+            });
+        }
+    });
+};
 
 exports.submit = function (req, res, next) {
     var _album = req.body.album;

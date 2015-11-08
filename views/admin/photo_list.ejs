@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<form id="pagerForm" method="post" action="photo/list">
+    <input type="hidden" name="currentPage" value="1" />
+    <input type="hidden" name="numPerPage" value="<%= page.numPerPage %>" />
+    <input type="hidden" name="orderField" value="${param.orderField}" />
+    <input type="hidden" name="orderDirection" value="${param.orderDirection}" />
+</form>
 
-</body>
-</html>
+<div class="pageHeader">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="photo/list" method="post">
+        <div class="searchBar">
+            <ul class="searchContent">
+                <li>
+                    <label>名称：</label>
+                    <input type="text" name="photo[name]" value=""/>
+                </li>
+            </ul>
+            <div class="subBar">
+                <ul>
+                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">
+            <li><a class="add" href="photo/form?album_id=<%= album.id%>" target="dialog"><span>添加</span></a></li>
+            <li><a class="edit" href="photo/form/{sid_user}" target="dialog" warn="请选择一条数据"><span>修改</span></a></li>
+            <li><a title="确实要删除这些数据吗?" target="selectedTodo" rel="ids" postType="string" href="photo/delete" class="delete"><span>删除</span></a></li>
+        </ul>
+    </div>
+    <table class="table" width="100%" layoutH="138">
+        <thead>
+        <tr>
+            <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+            <th width="120">名称</th>
+            <th>介绍</th>
+            <th width="160">创建日期</th>
+            <th width="160">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% list.forEach(function(item) { %>
+        <tr target="sid_user" rel="<%= item.id %>">
+            <td><input name="ids" value="<%= item.id %>" type="checkbox"></td>
+            <td><%= item.name %></td>
+            <td><%= item.intro %></td>
+            <td><%= item.create_time %></td>
+            <td>
+                <a title="删除" target="ajaxTodo" href="photo/delete?ids=<%= item.id %>" class="btnDel">删除</a>
+                <a title="编辑" target="dialog" href="photo/form/<%= item.id %>" class="btnEdit">编辑</a>
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+    <%- include('page')  -%>
+</div>
