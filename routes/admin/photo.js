@@ -11,9 +11,18 @@ var Promise = require("bluebird");
 exports.list = function (req, res, next) {
     var album_id = req.param('album_id');
     var page = Page.gen(req, res);
+    var _photo = req.body.photo;
+    var where = { album_id: +album_id };
+    if (_photo) {
+        if (_photo.name) {
+            where.name = {
+                $like: '%' + _photo.name + '%'
+            };
+        }
+    }
 
     Model.Photo.findAndCountAll({
-        where: {},
+        where: where,
         include: {
             model: Model.Album
         },
@@ -36,27 +45,42 @@ exports.list = function (req, res, next) {
 exports.form = function (req, res, next) {
     var id = req.params.id;
     var album_id = req.param('album_id');
-    var photo = {};
 
-    if (id != null) {
-
-    } else {
-        Model.Album.findById(album_id).then(function (album) {
-            res.render('admin/photo_form', {
-                title: '照片添加/修改',
-                album: album,
-                photo: photo
-            });
+    Promise.all([
+        Model.Album.findById(album_id),
+        Model.Photo.findOne({
+            where: {
+                id: id
+            },
+            include: {
+                model: Model.Album
+            }
+        })
+    ]).then(function(datas) {
+        res.render('admin/photo_form', {
+            title: '照片添加/修改',
+            album: datas[0] || {},
+            photo: datas[1] || {}
         });
-    }
+    });
 };
 
 exports.submit = function (req, res, next) {
     var _photo = req.body.photo;
     var file = req.files.file;
 
-    if (!file) {
-        return next();
+    if (_photo.id) {
+        Model.Photo.findById(_photo.id).then(function (photo) {
+            photo.update(_photo).then(function() {
+                var msg = DwzMsg.success('保存成功！');
+                msg.setNavTabId('photo_list');
+                msg.setForwardUrl('photo/list/' + _photo.album_id);
+                msg.setCallbackType(DwzMsg.closeCurrent);
+
+                res.json(msg);
+            });
+        });
+        return ;
     }
 
     var name = file.name;
@@ -116,19 +140,16 @@ exports.submit = function (req, res, next) {
                             _photo.middle_url = '/photo/' + uuid + '_M' + extName;
                             _photo.thumbnail_url = '/photo/' + uuid + '_S' + extName;
 
-                            if (id) {
+                            Model.Photo.build(_photo).save().then(function () {
+                                var msg = DwzMsg.success('保存成功！');
+                                msg.setNavTabId('photo_list');
+                                msg.setForwardUrl('photo/list/' + _photo.album_id);
+                                msg.setCallbackType(DwzMsg.closeCurrent);
 
-                            } else {
-                                Model.Photo.build(_photo).save().then(function () {
-                                    var msg = DwzMsg.success('保存成功！');
-                                    msg.setNavTabId('photo_list');
-                                    msg.setCallbackType(DwzMsg.closeCurrent);
-
-                                    res.json(msg);
-                                }).catch(function (err) {
-                                    return next(err);
-                                });
-                            }
+                                res.json(msg);
+                            }).catch(function (err) {
+                                return next(err);
+                            });
                         });
                     });
             });

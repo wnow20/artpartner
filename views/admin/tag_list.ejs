@@ -12,7 +12,7 @@
             <ul class="searchContent">
                 <li>
                     <label>名称：</label>
-                    <input type="text" name="tag[name]" value=""/>
+                    <input type="text" name="tag[name]" value="<%= tag.name %>"/>
                 </li>
             </ul>
             <div class="subBar">
@@ -43,11 +43,11 @@
         </thead>
         <tbody>
         <% list.forEach(function(item) { %>
-        <tr target="sid_user" rel="<%- item.dataValues.id %>">
-            <td><input name="ids" value="<%- item.dataValues.id %>" type="checkbox"></td>
-            <td><%- item.dataValues.name %></td>
-            <td><%- item.dataValues.intro %></td>
-            <td><%- item.dataValues.create_time %></td>
+        <tr target="sid_user" rel="<%= item.id %>">
+            <td><input name="ids" value="<%= item.id %>" type="checkbox"></td>
+            <td><%= item.name %></td>
+            <td><%= item.intro %></td>
+            <td><%= moment(item.create_time).format('YYYY-MM-DD HH:mm:ss') %></td>
             <td>
                 <a title="删除" target="ajaxTodo" href="tag/delete?ids=<%- item.dataValues.id %>" class="btnDel">删除</a>
                 <a title="编辑" target="dialog" href="tag/form/<%- item.dataValues.id %>" class="btnEdit">编辑</a>

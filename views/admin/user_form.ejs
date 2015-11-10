@@ -3,7 +3,10 @@
 
 <div class="pageContent">
 
-    <form method="post" action="user/submit" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+    <form method="post" action="user/submit" class="pageForm required-validate" autocomplete="off" onsubmit="return validateCallback(this)">
+        <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+        <input style="display:none" type="text" name="fakeusernameremembered">
+        <input style="display:none" type="password" name="fakepasswordremembered">
         <div class="pageFormContent nowrap" layoutH="97">
             <input type="hidden" name="user[id]" value="<%= user.id %>"/>
             <dl>
@@ -15,7 +18,7 @@
             <dl>
                 <dt>密码：</dt>
                 <dd>
-                    <input type="password" name="user[password]" class="required" value="<%= user.password %>"/>
+                    <input type="password" name="user[password]"/>
                 </dd>
             </dl>
             <dl>

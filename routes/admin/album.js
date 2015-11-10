@@ -5,8 +5,20 @@ var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 
 exports.list = function (req, res, next) {
     var page = Page.gen(req, res);
+    var _album = req.body.album || {};
+    var where = {};
+    if (_album) {
+        if (_album.name) {
+            where.name = {
+                $like: '%' + _album.name + '%'
+            }
+        }
+        if (_album.tag_id) {
+            where.tag_id = _album.tag_id = +_album.tag_id;
+        }
+    }
     Model.Album.findAndCountAll({
-        where: {},
+        where: where,
         include: {
             model: Model.Tag
         },
@@ -22,7 +34,8 @@ exports.list = function (req, res, next) {
                 title: '分类列表',
                 list: result.rows,
                 tags: tags,
-                page: page
+                page: page,
+                album: _album
             });
         });
     });

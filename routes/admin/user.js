@@ -45,6 +45,11 @@ exports.submit = function (req, res, next) {
 
     if (id) {
         Model.User.findById(id).then(function (user) {
+            if (_user.password) {
+                _user.password = bcrypt.hashSync(_user.password, user.salt);
+            } else {
+                delete _user.password;
+            }
             user.update(_user).then(function () {
                 var msg = DwzMsg.success('保存成功！');
                 msg.setNavTabId('user_form');

@@ -5,8 +5,20 @@ var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 
 exports.list = function (req, res, next) {
     var page = Page.gen(req, res);
+    var _tag = req.body.tag || {};
+
+    var where = {};
+
+    if (_tag) {
+        if (_tag.name) {
+            where.name = {
+                $like: '%' + _tag.name + '%'
+            }
+        }
+    }
+
     Model.Tag.findAndCountAll({
-        where: {},
+        where: where,
         offset: page.getOffset(),
         limit: page.numPerPage
     }).then(function (result) {
@@ -17,7 +29,8 @@ exports.list = function (req, res, next) {
         res.render('admin/tag_list', {
             title: '分类列表',
             list: result.rows,
-            page: page
+            page: page,
+            tag: _tag
         });
     });
 };
@@ -75,17 +88,37 @@ exports.delete = function (req, res, next) {
     if (ids.split) {
         ids = ids.split(',');
     }
-    Model.Tag.destroy({
+    ids.forEach(function (id, i) {
+        ids[i] = +id;
+    });
+    Model.Album.findOne({
         where: {
-            id: {
+            tag_id: {
                 $in: ids
             }
         }
-    }).then(function (count) {
-        var msg = DwzMsg.success('成功删除' + count + '条');
-        msg.setNavTabId('tag_list');
-        msg.setForwardUrl('tag/list');
+    }).then(function (album) {
+        if (album) {
+            var msg = DwzMsg.error('删除失败, ' + '原因: 该分类下面有相册, 请先删除从属的相册.');
+            msg.setNavTabId('tag_list');
+            msg.setForwardUrl('tag/list');
+            res.json(msg);
+            return;
+        } else {
+            Model.Tag.destroy({
+                where: {
+                    id: {
+                        $in: ids
+                    }
+                }
+            }).then(function (count) {
+                var msg = DwzMsg.success('成功删除' + count + '条');
+                msg.setNavTabId('tag_list');
+                msg.setForwardUrl('tag/list');
 
-        res.json(msg);
+                res.json(msg);
+            });
+        }
     });
+
 };

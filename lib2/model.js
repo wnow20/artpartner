@@ -43,8 +43,10 @@ var Album = db.sequelize.define('album', {
 var Photo = db.sequelize.define('photo', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
     album_id: { type: Sequelize.INTEGER },
+    uuid: { type: Sequelize.STRING },
     name: { type: Sequelize.STRING },
     intro: { type: Sequelize.STRING },
+    path: { type: Sequelize.STRING },
     url: { type: Sequelize.STRING },
     large_url: { type: Sequelize.STRING },
     middle_url: { type: Sequelize.STRING },

@@ -24,6 +24,7 @@
     <form method="post" action="photo/submit" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return iframeCallback(this, dialogAjaxDone);">
         <div class="pageFormContent nowrap" layoutH="56">
             <input type="hidden" name="photo[id]" value="<%= photo.id %>"/>
+            <input type="hidden" name="photo[album_id]" value="<%= photo.album && photo.album.id || album.id %>">
             <p>
                 <label>名称：</label>
                 <input type="text" name="photo[name]" maxlength="20" class="textInput required" size="30" value="<%= photo.name %>"/>
@@ -34,7 +35,13 @@
             </p>
             <p>
                 <label>图片：</label>
+                <% if (photo.id) { %>
+                <span class="textInput">
+                    <img src="<%= photo.thumbnail_url %>" alt="<%= photo.name %>" width="100"/>
+                </span>
+                <% } else { %>
                 <input type="file" name="file" />
+                <% } %>
             </p>
         </div>
         <div class="formBar">
