@@ -1,7 +1,7 @@
 var bcrypt = require('bcrypt');
 var cwd = process.cwd();
 var Model = require(cwd + '/lib2/model');
-var Page = require(process.cwd() + '/lib/Page');
+var Page = require(process.cwd() + '/lib/page');
 var DwzMsg = require(cwd + '/lib/DwzMsg');
 
 exports.list = function (req, res, next) {

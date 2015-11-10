@@ -1,7 +1,7 @@
 var cwd = process.cwd();
 var Model = require(cwd + '/lib2/model');
 var utils = require(cwd + '/lib2/utils');
-var Page = require(process.cwd() + '/lib/Page');
+var Page = require(process.cwd() + '/lib/page');
 var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 var fs = require('fs');
 
