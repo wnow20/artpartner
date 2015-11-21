@@ -33,3 +33,4 @@ node_modules
 upload/
 tmp/
 build/
+bower_components/

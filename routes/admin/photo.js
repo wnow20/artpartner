@@ -56,7 +56,7 @@ exports.form = function (req, res, next) {
                 model: Model.Album
             }
         })
-    ]).then(function(datas) {
+    ]).then(function (datas) {
         res.render('admin/photo_form', {
             title: '照片添加/修改',
             album: datas[0] || {},

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="zh-cn" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="zh-cn" class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="zh-cn" class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh-cn"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Art Partner</title>
+    <%- include ./include/head %>
+</head>
+<body>
+<%- include ./include/topbar %>
+<div id="main">
+    <div class="container-flex">
+        <div class="cell cell-200">
+            <nav>
+                <ul class="aside">
+                    <% tags.forEach(function(tag) { %>
+                    <li><a href="/tag/<%= tag.id %>"><%= tag.name %></a></li>
+                    <% }); %>
+                </ul>
+            </nav>
+        </div>
+        <div class="cell cell-flex">
+            <div style="margin-right: -10px;">
+                <div class="waterfull-photos" id="J_waterfull">
+                    <% albums.forEach(function(album) {%>
+                        <% if (album.photos.length) {%>
+                        <div class="waterfull-item">
+                            <a href="/album/<%= album.id %>"><img src="<%= album.photos[0].thumbnail_url %>" alt="<%= album.name %>"/></a>
+                            <div class="waterfull-intro"><span class="waterfull-intro-inner"><%= album.name %></span></div>
+                        </div>
+                        <% } %>
+                    <% }); %>
+                </div>
+
+                <% if (!albums.length) {%>
+                <div class="no-photo-in-this-tag">no photo.</div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ./include/footer %>
+<%- include ./include/script %>
+<script src="/public/js/masonry/masonry.pkgd.min.js"></script>
+<script src="/public/js/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script>
+    $(function () {
+        var J_waterfull = $('#J_waterfull');
+        J_waterfull.masonry({
+            itemSelector: '.waterfull-item',
+            percentPosition: true
+        });
+        J_waterfull.imagesLoaded().progress( function() {
+            J_waterfull.masonry('layout');
+        });
+    })
+</script>
+</body>
+</html>
