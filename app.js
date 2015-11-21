@@ -74,6 +74,7 @@ app.all('/logout', admin.logout);
 app.get('/photo/:uuid_type_ext', require('./routes/photo').index);
 
 app.get('/', routes.index);
+app.get('/cms', routes.cms);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
