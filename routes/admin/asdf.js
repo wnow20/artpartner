@@ -7,7 +7,7 @@ exports.form = function (req, res, next) {
 
     Model.Asdf.findById(1).then(function (asdf) {
         console.log(asdf);
-        res.render('admin/asdf_edit', {
+        res.render('admin/asdf_form', {
             title: '分类添加/修改',
             asdf: asdf,
             type: type
