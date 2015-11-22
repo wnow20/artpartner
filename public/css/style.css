@@ -287,3 +287,35 @@ ul {
     font-size: 16px;
     color: #999;
 }
+
+.photos-list {
+    margin-top: 20px;
+}
+.photos-list .photo-box {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+}
+.photos-list .photo-box:hover .photo-intro {
+    margin-bottom: 0;
+}
+.photos-list .photo-intro {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: rgba(0,0,0,.7);
+    color: #999;
+    transition: all .3s;
+    margin-bottom: -100px;
+}
+.photos-list .photo-share {
+    color: #fff;
+    float: right;
+}
+.photos-list .photo-share a {
+    color: #fff;
+}

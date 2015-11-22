@@ -28,7 +28,6 @@ exports.tag = function (req, res, next) {
             });
         }(id))
     ]).then(function (datas) {
-        console.log(datas[1]);
         page.setTotalCount(datas[1].count);
 
         res.render('web/tag', {
@@ -39,6 +38,30 @@ exports.tag = function (req, res, next) {
         });
     }).then(null, function(err) {
         next(err);
+    });
+};
+
+exports.album = function (req, res, next) {
+    var id = req.params.id;
+    if (!id) {
+        next();
+    }
+
+    Promise.all([
+        Model.Tag.findAll(),
+        Model.Album.findOne({
+            where: {
+                id: id
+            },
+            include: [{
+                model: Model.Photo
+            }]
+        })
+    ]).then(function (datas) {
+        res.render('web/album', {
+            tags: datas[0] || {},
+            album: datas[1] || {}
+        });
     });
 };
 

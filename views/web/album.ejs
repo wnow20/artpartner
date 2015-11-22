@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="zh-cn" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="zh-cn" class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="zh-cn" class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh-cn"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Art Partner</title>
+    <%- include ./include/head %>
+</head>
+<body>
+<%- include ./include/topbar %>
+<div id="main">
+    <div class="container-flex">
+        <div class="cell cell-200">
+            <nav>
+                <ul class="aside">
+                    <% tags.forEach(function(tag) { %>
+                    <li><a href="/tag/<%= tag.id %>"><%= tag.name %></a></li>
+                    <% }); %>
+                </ul>
+            </nav>
+        </div>
+        <div class="cell cell-flex">
+            <div class="photos-list">
+                <% if (album.photos.length) { %>
+                    <% var photos = album.photos %>
+                    <% photos.forEach(function(photo) { %>
+                        <div class="photo-box">
+                            <img src="<%= photo.middle_url %>" alt=""/>
+                            <div class="photo-intro">
+                                <%= photo.intro %>
+                                <div class="photo-share">
+                                    <a href="#"><i class="fa fa-weibo"></i></a>
+                                    <a href="#"><i class="fa fa-wechat"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ./include/footer %>
+<%- include ./include/script %>
+</body>
+</html>
