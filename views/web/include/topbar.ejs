@@ -8,15 +8,15 @@
                 <nav>
                     <ul class="header-nav">
                         <li><a href="/">Home</a></li>
-                        <li><a href="">Artists</a></li>
-                        <li><a href="">Fashion</a></li>
-                        <li><a href="">Advertising</a></li>
+                        <% topnav.forEach(function (tag) { %>
+                        <li><a href="/tag/<%= tag.id %>" title="<%= tag.intro %>"><%= tag.name %></a></li>
+                        <% }); %>
                         <li><a href="/cms/#about-us">About</a></li>
                     </ul>
                 </nav>
                 <div class="share">
-                    <a href="#"><i class="fa fa-weibo"></i></a>
-                    <a href="#"><i class="fa fa-wechat"></i></a>
+                    <a href="http://weibo.com/weixiaobeijing" target="_blank"><i class="fa fa-weibo"></i></a>
+                    <a href="http://weibo.com/weixiaobeijing" target="_blank"><i class="fa fa-wechat"></i></a>
                 </div>
                 <nav>
                     <ul class="header-nav-right">

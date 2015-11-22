@@ -37,6 +37,7 @@
             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
             <th width="120">名称</th>
             <th>介绍</th>
+            <th width="100">设为顶部导航</th>
             <th width="160">创建日期</th>
             <th width="70">操作</th>
         </tr>
@@ -47,6 +48,7 @@
             <td><input name="ids" value="<%= item.id %>" type="checkbox"></td>
             <td><%= item.name %></td>
             <td><%= item.intro %></td>
+            <td><%= item.is_topnav? '是' : '否' %></td>
             <td><%= moment(item.create_time).format('YYYY-MM-DD HH:mm:ss') %></td>
             <td>
                 <a title="删除" target="ajaxTodo" href="tag/delete?ids=<%- item.dataValues.id %>" class="btnDel">删除</a>

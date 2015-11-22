@@ -10,6 +10,7 @@ var moment = require('moment');
 var admin = require('./admin');
 var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 var cwd = process.cwd();
+var middleware = require(process.cwd() + '/lib2/middleware');
 
 var res = express.response;
 res.message = function (msg, type) {
@@ -46,12 +47,15 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.locals.moment = moment;
 
 app.use(function (req, res, next) {
+    console.log('mmmmmmm');
     res.locals.messages = req.session.messages || [];
     res.locals.removeMessages = function () {
         req.session.messages = [];
     };
     next();
 });
+
+app.use(middleware.genCache(app));
 
 app.use(app.router);
 

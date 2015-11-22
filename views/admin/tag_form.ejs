@@ -10,6 +10,13 @@
                 <label>介绍：</label>
                 <input type="text" name="tag[intro]" class="textInput" size="30" value="<%= tag.intro %>"/>
             </p>
+            <p>
+                <label>设为顶部导航：</label>
+                <span>
+                    <label style="display: inline-block; width: auto;"><input type="radio" name="tag[is_topnav]" value="0" <%= !tag.is_topnav?'checked': '' %> >否</label>
+                    <label style="display: inline-block; width: auto;"><input type="radio" name="tag[is_topnav]" value="1" <%= tag.is_topnav?'checked': '' %>>是</label>
+                </span>
+            </p>
         </div>
         <div class="formBar">
             <ul>

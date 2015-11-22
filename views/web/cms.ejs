@@ -50,9 +50,15 @@
             var hash = location.hash;
             var aim = $(hash);
             var aimTop = aim.position().top - 70;
-            document.body.scrollTop = document.body.scrollTop = aimTop;
+            console.log(aimTop);
+            $(document.body).scrollTop(aimTop);
         }
-        window.onload = aimSection;
+        window.onload = function () {
+
+            setTimeout(function () {
+                aimSection();
+            }, 100);
+        };
     });
 </script>
 </body>

@@ -25,7 +25,8 @@ var Tag = db.sequelize.define('tag', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
     name: { type: Sequelize.STRING },
     intro: { type: Sequelize.STRING },
-    del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+    del_flag: { type: Sequelize.BOOLEAN, defaultValue: false },
+    is_topnav: { type: Sequelize.BOOLEAN, defaultValue: false }
 }, {
     tableName: 'tag'
 });
