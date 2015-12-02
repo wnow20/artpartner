@@ -29,6 +29,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(favicon());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/html', express.static(path.join(__dirname, 'html')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -39,15 +43,9 @@ app.use(session({
     secret: 'whosyourdaddy'
 }));
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/html', express.static(path.join(__dirname, 'html')));
-app.use('/public', express.static(path.join(__dirname, 'public')));
-
 app.locals.moment = moment;
 
 app.use(function (req, res, next) {
-    console.log('mmmmmmm');
     res.locals.messages = req.session.messages || [];
     res.locals.removeMessages = function () {
         req.session.messages = [];

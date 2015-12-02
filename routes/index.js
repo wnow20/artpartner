@@ -23,6 +23,10 @@ exports.tag = function (req, res, next) {
                 include: [{
                     model: Model.Photo
                 }],
+                order: [
+                    ['id', 'DESC'],
+                    [Model.Photo, 'is_cover', 'DESC']
+                ],
                 offset: page.getOffset(),
                 limit: page.numPerPage
             });

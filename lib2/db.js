@@ -1,7 +1,10 @@
+var cwd = process.cwd();
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('artpartner', 'root', 'Opslter1', {
-    host: 'www.asdfz.cn',
-    port: 3306,
+var Config = require(cwd + '/lib2/config.json');
+
+var sequelize = new Sequelize(Config.db_datebase, Config.db_name, Config.db_password, {
+    host: Config.db_host,
+    port: Config.db_port,
     dialect: 'mysql',
 
     pool: {

@@ -45,20 +45,24 @@
         <thead>
         <tr>
             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+            <!--<th width="22">&nbsp;</th>-->
             <th width="120">名称</th>
             <th width="120">所属类别</th>
             <th>介绍</th>
+            <th width="50">排序</th>
             <th width="160">创建日期</th>
             <th width="160">操作</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="sortDrag">
         <% list.forEach(function(item) { %>
         <tr target="sid_user" rel="<%= item.id %>">
             <td><input name="ids" value="<%= item.id %>" type="checkbox"></td>
+            <!--<td align="center"><i class="fa fa-arrows" title="拖动改变作品排序"></i></td>-->
             <td><%= item.name %></td>
             <td><%= item.tag && item.tag.name %></td>
             <td><%= item.intro %></td>
+            <td><%= item.seq %></td>
             <td><%= moment(item.create_time).format('YYYY-MM-DD HH:mm:ss') %></td>
             <td>
                 <a title="删除" target="ajaxTodo" href="album/delete?ids=<%= item.id %>" class="btnDel">删除</a>
@@ -70,4 +74,18 @@
         </tbody>
     </table>
     <%- include('page')  -%>
+    <!--<script>
+        $(function() {
+            var options = {
+                cursor: 'move', // selector 的鼠标手势
+                sortBoxs: 'tbody.sortDrag', //拖动排序项父容器
+                replace: true, //2个sortBox之间拖动替换
+                items: '> tr', //拖动排序项选择器
+                selector: 'td:nth-of-type(2)', //拖动排序项用于拖动的子元素的选择器，为空时等于item
+                zIndex: 1000
+            };
+            //debugger;
+            $('tbody', navTab.getCurrentPanel()).sortDrag(options);
+        });
+    </script>-->
 </div>

@@ -36,6 +36,7 @@ var Album = db.sequelize.define('album', {
     tag_id: { type: Sequelize.INTEGER },
     name: { type: Sequelize.STRING },
     intro: { type: Sequelize.STRING },
+    seq: { type: Sequelize.INTEGER },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
 }, {
     tableName: 'album'
@@ -52,6 +53,7 @@ var Photo = db.sequelize.define('photo', {
     large_url: { type: Sequelize.STRING },
     middle_url: { type: Sequelize.STRING },
     thumbnail_url: { type: Sequelize.STRING },
+    is_cover: { type: Sequelize.BOOLEAN },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
 }, {
     tableName: 'photo'

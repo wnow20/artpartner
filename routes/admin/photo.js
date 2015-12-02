@@ -6,7 +6,9 @@ var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 var fs = require('fs');
 var moment = require('moment');
 var sharp = require('sharp');
-var Promise = require("bluebird");
+var Promise = require('bluebird');
+var Config = require(cwd + '/lib2/config.json');
+var db = require(cwd + '/lib2/db');
 
 exports.list = function (req, res, next) {
     var album_id = req.param('album_id');
@@ -89,7 +91,8 @@ exports.submit = function (req, res, next) {
 
     var savedFilename = moment().format('YYYYMMDDHHmmss') + utils.randomString(6);
     var savedFilenameWithExt = savedFilename + extName;
-    var savedParent = cwd + '/upload/' + time + '/';
+    var savedParent = Config.upload_path + time + '/';
+    var relativeSavedPath = time + '/' + savedFilenameWithExt;
     var savedPath = savedParent + savedFilenameWithExt;
     var uuid = utils.randomString(32);
 
@@ -133,7 +136,7 @@ exports.submit = function (req, res, next) {
                         Promise.all(parr).then(function() {
 
                             var id = _photo.id;
-                            _photo.path = savedPath;
+                            _photo.path = relativeSavedPath;
                             _photo.uuid = uuid;
                             _photo.url = '/photo/' + uuid + extName;
                             _photo.large_url = '/photo/' + uuid + '_L' + extName;
@@ -174,4 +177,28 @@ exports.delete = function (req, res, next) {
 
         res.json(msg);
     });
+};
+
+exports.set_cover = function (req, res, next) {
+    var id = req.params.id;
+
+
+    var sql1 = '' +
+        'update photo t set is_cover = 0 where t.id IN (' +
+        '    select a.id from (' +
+        '        select id from photo where `album_id` IN (select album_id from photo where id = ' + id + ') and id != ' + id +
+        '    ) a' +
+        ');';
+
+    var sql2 = 'update photo set is_cover = 1 where id = ' + id;
+
+    db.sequelize.query(sql1).spread(function (results, metadata) {
+        db.sequelize.query(sql2).spread(function (results, metadata) {
+            var msg = DwzMsg.success('设置成功');
+            msg.setNavTabId('photo_list');
+            msg.setForwardUrl('phone/list');
+
+            res.json(msg);
+        });
+    })
 };

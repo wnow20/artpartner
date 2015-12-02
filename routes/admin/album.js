@@ -22,6 +22,7 @@ exports.list = function (req, res, next) {
         include: {
             model: Model.Tag
         },
+        order: 'id desc',
         offset: page.getOffset(),
         limit: page.numPerPage
     }).then(function (result) {
