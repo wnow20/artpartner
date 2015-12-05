@@ -1,2 +1,15 @@
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script> window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+<script>
+    $(function() {
+        var $mo_nav_toggle = $('.mo-nav-toggle');
+        console.log($mo_nav_toggle);
+        var $mo_head_nav = $('.mo-head-nav');
+        $mo_nav_toggle.on('click', function (e) {
+            console.log(111);
+            e.preventDefault();
+            $mo_head_nav.toggleClass('in');
+            return false;
+        });
+    });
+</script>
