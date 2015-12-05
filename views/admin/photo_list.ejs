@@ -25,7 +25,7 @@
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <li><a class="add" href="photo/form?album_id=<%= album.id%>" target="dialog"><span>添加</span></a></li>
+            <li><a class="add" href="photo/upload?album_id=<%= album.id%>" target="dialog"><span>添加</span></a></li>
             <li><a class="edit" href="photo/form/{sid_photo}" target="dialog" warn="请选择一条数据"><span>修改</span></a></li>
             <li><a title="确实要删除这些数据吗?" target="selectedTodo" rel="ids" postType="string" href="photo/delete" class="delete"><span>删除</span></a></li>
             <li><a class="icon" href="photo/set_cover/{sid_photo}" target="ajaxTodo" warn="请选择一条数据"><span>设为封面</span></a></li>
@@ -60,7 +60,7 @@
             <td><%= moment(item.create_time).format('YYYY-MM-DD HH:mm:ss') %></td>
             <td>
                 <a title="删除" target="ajaxTodo" href="photo/delete?ids=<%= item.id %>" class="btnDel">删除</a>
-                <a title="编辑" target="dialog" href="photo/form/<%= item.id %>" class="btnEdit">编辑</a>
+                <a title="编辑" target="dialog" href="photo/form/<%= item.id %>" class="btnEdit" height="400">编辑</a>
                 <a title="查看" target="_blank" href="<%= item.url %>" class="btnView">查看</a>
             </td>
         </tr>

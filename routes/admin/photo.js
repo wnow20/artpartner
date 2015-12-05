@@ -10,6 +10,59 @@ var Promise = require('bluebird');
 var Config = require(cwd + '/lib2/config.json');
 var db = require(cwd + '/lib2/db');
 
+var PU = {
+    upload_path: Config.upload_path,
+
+    getPath: function(photo) {
+        console.log(this.upload_path + photo.path)
+        return this.upload_path + photo.path;
+    },
+    getLargePath: function(photo) {
+        var zd = photo.path.substr(0, photo.path.lastIndexOf('.'));
+        var ext = photo.path.substr(photo.path.lastIndexOf('.'));
+        return [this.upload_path, zd, '_L', ext].join('');
+    },
+    getMiddlePath: function(photo) {
+        var zd = photo.path.substr(0, photo.path.lastIndexOf('.'));
+        var ext = photo.path.substr(photo.path.lastIndexOf('.'));
+        return [this.upload_path, zd, '_M', ext].join('');
+    },
+    getThumbnailPath: function(photo) {
+        var zd = photo.path.substr(0, photo.path.lastIndexOf('.'));
+        var ext = photo.path.substr(photo.path.lastIndexOf('.'));
+        return [this.upload_path, zd, '_S', ext].join('');
+    },
+    delete: function(photos) {
+        var promiseQueue = [];
+        if (!utils.isArray(photos)) {
+            photos = [photos];
+        }
+
+        photos.forEach(function (photo) {
+            promiseQueue.push(PU.removePhotoSync(photo));
+
+            promiseQueue.push(PU.deleteFileSync(PU.getPath(photo)));
+            promiseQueue.push(PU.deleteFileSync(PU.getLargePath(photo)));
+            promiseQueue.push(PU.deleteFileSync(PU.getMiddlePath(photo)));
+            promiseQueue.push(PU.deleteFileSync(PU.getThumbnailPath(photo)));
+        });
+        return Promise.all(promiseQueue);
+    },
+    removePhotoSync: function (photo) {
+        return new Promise(function (resolve, reject) {
+            photo.destroy().then(function (count) {
+                resolve(count);
+            });
+        });
+    },
+    deleteFileSync: function (file_path) {
+        return new Promise(function (resolve, reject) {
+            fs.unlink(file_path, function (err) {
+                err? reject(err) : resolve(file_path);
+            });
+        });
+    }
+};
 exports.list = function (req, res, next) {
     var album_id = req.param('album_id');
     var page = Page.gen(req, res);
@@ -69,8 +122,6 @@ exports.form = function (req, res, next) {
 
 exports.submit = function (req, res, next) {
     var _photo = req.body.photo;
-    var file = req.files.file;
-
     if (_photo.id) {
         Model.Photo.findById(_photo.id).then(function (photo) {
             photo.update(_photo).then(function() {
@@ -84,6 +135,23 @@ exports.submit = function (req, res, next) {
         });
         return ;
     }
+};
+
+exports.upload = function (req, res, next) {
+    var album_id = req.param('album_id');
+    if (req.method == 'GET') {
+
+        Model.Album.findById(album_id).then(function(album) {
+            res.render('admin/photo_upload', {
+                title: '照片上传',
+                album: album
+            });
+        });
+        return ;
+    }
+
+    var _photo = req.body.photo;
+    var file = req.files.file;
 
     var name = file.name;
     var extName = name.substring(name.lastIndexOf('.'), name.length);
@@ -104,11 +172,7 @@ exports.submit = function (req, res, next) {
     function genImgShot(sharpImg, width, path) {
         return new Promise(function (resolve, reject) {
             sharpImg.resize(width).toFile(path, function(err) {
-                if (err) {
-                    reject();
-                } else {
-                    resolve(path);
-                }
+                err? reject(err) : resolve(path);
             });
         });
     }
@@ -138,18 +202,14 @@ exports.submit = function (req, res, next) {
                             var id = _photo.id;
                             _photo.path = relativeSavedPath;
                             _photo.uuid = uuid;
+                            _photo.name = file.originalFilename.substr(0, file.originalFilename.lastIndexOf('.'));
                             _photo.url = '/photo/' + uuid + extName;
                             _photo.large_url = '/photo/' + uuid + '_L' + extName;
                             _photo.middle_url = '/photo/' + uuid + '_M' + extName;
                             _photo.thumbnail_url = '/photo/' + uuid + '_S' + extName;
 
                             Model.Photo.build(_photo).save().then(function () {
-                                var msg = DwzMsg.success('保存成功！');
-                                msg.setNavTabId('photo_list');
-                                msg.setForwardUrl('photo/list/' + _photo.album_id);
-                                msg.setCallbackType(DwzMsg.closeCurrent);
-
-                                res.json(msg);
+                                res.status(200).end('上传成功!');
                             }).catch(function (err) {
                                 return next(err);
                             });
@@ -164,18 +224,23 @@ exports.delete = function (req, res, next) {
     if (ids.split) {
         ids = ids.split(',');
     }
-    Model.Photo.destroy({
+
+    Model.Photo.findAll({
         where: {
             id: {
                 $in: ids
             }
         }
-    }).then(function (count) {
-        var msg = DwzMsg.success('成功删除' + count + '条');
-        msg.setNavTabId('photo_list');
-        msg.setForwardUrl('phone/list');
+    }).then(function(photos) {
+        PU.delete(photos).then(function () {
+            var msg = DwzMsg.success('成功删除');
+            msg.setNavTabId('photo_list');
+            msg.setForwardUrl('phone/list');
 
-        res.json(msg);
+            res.json(msg);
+
+            console.log('图片删除成功!');
+        })
     });
 };
 

@@ -53,6 +53,7 @@ admin.all('/album/delete/(:id)?', albumRoute.delete);
 
 admin.all('/photo/list/(:album_id)?', photoRoute.list);
 admin.all('/photo/form/(:id)?', photoRoute.form);
+admin.all('/photo/upload', photoRoute.upload);
 admin.all('/photo/submit', photoRoute.submit);
 admin.all('/photo/delete/(:id)?', photoRoute.delete);
 admin.all('/photo/set_cover/(:id)?', photoRoute.set_cover);

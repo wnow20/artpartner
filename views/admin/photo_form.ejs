@@ -1,39 +1,29 @@
-<style type="text/css" media="screen">
-    .my-uploadify-button {
-        background:none;
-        border: none;
-        text-shadow: none;
-        border-radius:0;
+<style>
+    .clearfix:before,
+    .clearfix:after {
+        content: '';
+        display: table;
     }
-
-    .uploadify:hover .my-uploadify-button {
-        background:none;
-        border: none;
+    .clearfix:after {
+        clear: both;
     }
-
-    .fileQueue {
-        width: 400px;
-        height: 150px;
-        overflow: auto;
-        border: 1px solid #E5E5E5;
-        margin-bottom: 10px;
-    }
+    .mt10 { margin-top: 10px; }
+    .mb10 { margin-bottom: 10px; }
 </style>
-
 <div class="pageContent">
     <form method="post" action="photo/submit" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return iframeCallback(this, dialogAjaxDone);">
         <div class="pageFormContent nowrap" layoutH="56">
             <input type="hidden" name="photo[id]" value="<%= photo.id %>"/>
             <input type="hidden" name="photo[album_id]" value="<%= photo.album && photo.album.id || album.id %>">
-            <p>
+            <div class="clearfix mt10 mb10">
                 <label>名称：</label>
                 <input type="text" name="photo[name]" maxlength="20" class="textInput required" size="30" value="<%= photo.name %>"/>
-            </p>
-            <p>
+            </div>
+            <div class="clearfix mt10 mb10">
                 <label>介绍：</label>
-                <input type="text" name="photo[intro]" class="textInput required" size="30" value="<%= photo.intro %>"/>
-            </p>
-            <p>
+                <textarea name="photo[intro]" class="textInput required" cols="40" rows="3"><%= photo.intro %></textarea>
+            </div>
+            <div class="clearfix mt10 mb10">
                 <label>图片：</label>
                 <% if (photo.id) { %>
                 <span class="textInput">
@@ -42,7 +32,7 @@
                 <% } else { %>
                 <input type="file" name="file" />
                 <% } %>
-            </p>
+            </div>
         </div>
         <div class="formBar">
             <ul>
@@ -53,20 +43,3 @@
     </form>
 
 </div>
-<script>
-    $(function() {
-        $('#file_upload1').uploadify({
-            'swf'      : '/public/js/dwz-ria/uploadify/scripts/uploadify.swf',
-            'uploader' : 'photo/upload',
-            formData:{PHPSESSID:'xxx', ajax:1},
-            buttonText:'请选择文件',
-            fileSizeLimit:'2000KB',
-            fileTypeDesc:'*.jpg;*.jpeg;*.gif;*.png;',
-            fileTypeExts:'*.jpg;*.jpeg;*.gif;*.png;',
-            auto:true,
-            multi:false,
-            onUploadSuccess:uploadifySuccess,
-            onQueueComplete:uploadifyQueueComplete
-        });
-    });
-</script>
