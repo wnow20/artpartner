@@ -1,6 +1,6 @@
 body {
     background: #fff;
-    font: 14px/1.5 'walkway', 'Microsoft Yahei', 'Hiragino Sans GB', Helvetica, 'Helvetica Neue', '微软雅黑', Tahoma, Arial, sans-serif;
+    font: 14px/1.5 'walkway-semibold', 'Microsoft Yahei', 'Hiragino Sans GB', Helvetica, 'Helvetica Neue', '微软雅黑', Tahoma, Arial, sans-serif;
     color: #444;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
@@ -27,10 +27,29 @@ a:visited {
 }
 
 @font-face {
-  font-family: 'walkway';
-  src: url('walkway condensed.eot');
-  src: url('walkway condensed.eot?#iefix') format('embedded-opentype'),
-       url('walkway condensed.woff') format('woff'),
-       url('walkway condensed.ttf') format('truetype'),
-       url('walkway condensed.svg#fp-29420') format('svg');
+    font-family: 'walkway';
+    src: url('/public/font/walkway condensed.eot');
+    src: url('/public/font/walkway condensed.eot?#iefix') format('embedded-opentype'),
+    url('/public/font/walkway condensed.woff') format('woff'),
+    url('/public/font/walkway condensed.ttf') format('truetype'),
+    url('/public/font/walkway condensed.svg#fp-29420') format('svg');
 }
+
+@font-face {
+    font-family: 'walkway-bold';
+    src: url('/public/font/walkway condensed bold.eot');
+    src: url('/public/font/walkway condensed bold.eot?#iefix') format('embedded-opentype'),
+    url('/public/font/walkway condensed bold.woff') format('woff'),
+    url('/public/font/walkway condensed bold.ttf') format('truetype'),
+    url('/public/font/walkway condensed bold.svg#fp-29420') format('svg');
+}
+
+@font-face {
+    font-family: 'walkway-semibold';
+    src: url('/public/font/walkway condensed semibold.eot');
+    src: url('/public/font/walkway condensed semibold.eot?#iefix') format('embedded-opentype'),
+    url('/public/font/walkway condensed semibold.woff') format('woff'),
+    url('/public/font/walkway condensed semibold.ttf') format('truetype'),
+    url('/public/font/walkway condensed semibold.svg#fp-29419') format('svg');
+}
+

@@ -91,12 +91,13 @@ ul {
     display: block;
     font-size: 24px;
     padding: 40px 5px 10px;
-    line-height: 20px;
+    line-height: 16px;
     float: left;
     border-bottom: 1px solid #eee;
     width: 160px;
     margin-right: 20px;
     text-align: center;
+    height: 71px;
 }
 .header-nav-wrap {
     border-bottom: 1px solid #eee;
@@ -104,12 +105,12 @@ ul {
 .header-nav {
     list-style: none;
     float: left;
-    margin: 40px 5px 10px;
+    margin: 43px 5px 10px;
     font-size: 0;
 }
 .header-nav li {
     display: inline-block;
-    border-left: 1px solid #aaa;
+    border-left: 1px solid #eee;
 }
 .header-nav li:first-of-type {
     border-left: none;
@@ -117,7 +118,7 @@ ul {
 .header-nav a {
     display: block;
     padding: 0 .5em;
-    line-height: 20px;
+    line-height: 16px;
     font-size: 14px;
     color: #999;
     text-transform: uppercase;
@@ -131,20 +132,19 @@ ul {
 .header-nav-right {
     list-style: none;
     float: right;
-    margin: 40px 5px 10px;
+    margin: 43px 5px 10px;
     font-size: 0;
 }
 .header-nav-right li {
     display: inline-block;
     float: left;
-    height: 20px;
-    border-left: 1px solid #aaa;
+    border-left: 1px solid #eee;
 }
 .header-nav-right li:first-of-type {
     border-left: none;
 }
 .header-nav-right a {
-    line-height: 20px;
+    line-height: 16px;
     font-size: 14px;
     display: inline-block;
     padding: 0 .5em;
@@ -176,6 +176,7 @@ ul {
 .aside a {
     color: #999;
     font-size: 14px;
+    line-height: 16px;
 }
 .aside a.cur,
 .aside a:hover,
