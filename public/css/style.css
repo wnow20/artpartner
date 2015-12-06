@@ -522,3 +522,26 @@ ul {
     height: 100%;
     font-size: 0;
 }
+
+/* 二维码 */
+.wechat {
+    position: relative;
+}
+.wechat .qrcode {
+    position: absolute;
+    display: none;
+    padding: 5px;
+    right: 20px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 2px rgba(10,10,10,.2);
+    width: 122px;
+    height: 122px;
+}
+.wechat.in .qrcode {
+    display: block;
+}
+.wechat .qrcode img {
+    width: 110px;
+}

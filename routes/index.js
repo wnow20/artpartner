@@ -18,7 +18,7 @@ exports.index = function (req, res) {
         limit: 20
     }).then(function (albums) {
         res.render('web/index', {
-            title: 'Art Partner',
+            title: 'HOME - WANGYI',
             albums: albums
         });
     });
@@ -51,7 +51,7 @@ exports.tag = function (req, res, next) {
         page.setTotalCount(datas[1].count);
 
         res.render('web/tag', {
-            title: 'Tags - WY studio',
+            title: (datas[0] && datas[0].name) + ' - WANGYI',
             tags: datas[0] || {},
             albums: datas[1].rows || {},
             page: page
@@ -80,7 +80,8 @@ exports.album = function (req, res, next) {
     ]).then(function (datas) {
         res.render('web/album', {
             tags: datas[0] || {},
-            album: datas[1] || {}
+            album: datas[1] || {},
+            title: (datas[1] && datas[1].name) + ' - WANGYI'
         });
     });
 };
