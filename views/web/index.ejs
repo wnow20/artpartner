@@ -14,12 +14,98 @@
 </head>
 <body>
 <%- include ./include/topbar %>
-<div style="text-align: center; position: absolute; top: 40%; width: 100%; font-size: 24px;">Comming Soon!</div>
 <div id="main">
+    <ul class="hidden gallery-list">
+        <% albums.forEach(function (album) { %>
+        <% if (album.photos.length) { %>
+        <li>
+            <a href="/album/<%= album.id %>" class="gallery-album">
+                <img src="<%= album.photos[0].thumbnail_url %>" alt="<%= album.name %>"/>
+                <div class="gallery-album-intro"><%= album.name %></div>
+            </a>
+        </li>
+        <% } %>
+        <% }); %>
+    </ul>
+    <div class="gallery"></div>
 </div>
 <footer class="footer footer-fixed">
     <div class="copyright">COPYRIGHT © 2015. ART PARTNER. ALL RIGHTS RESERVED</div>
 </footer>
 <%- include ./include/script %>
+<script src="/public/js/jquery.scrollbox.js"></script>
+<script>
+    $(function () {
+        var $gallery = $('.gallery');
+        var tmpl = '' +
+                '<div class="gallery-col">' +
+                '    <ul></ul>' +
+                '</div>';
+
+        var $galleryList = $('.gallery-list').children();
+
+        var JD_Width = 768;
+        var cur_width = document.body.clientWidth;
+        var is_big_screen = cur_width > JD_Width;
+        var cols_count = 4;
+
+        var cols = [];
+
+        function init() {
+            $galleryList.each(function (index, ele) {
+                var aim = index%cols_count;
+                cols[aim] = cols[aim] || [];
+                cols[aim].push(ele);
+            });
+        }
+
+        init();
+
+        function render() {
+            for (var i = 0; i < cols.length; i++) {
+                var $col = $(tmpl);
+                var $ul = $col.find('ul');
+                $ul.append(cols[i]);
+                if (!is_big_screen) {
+                    ++i;
+                    $ul.append(cols[i]);
+                }
+                $gallery.append($col);
+            }
+        }
+        render();
+
+        function initEvent() {
+            $('.gallery-col:nth-of-type(2n)').scrollbox({
+                linear: true,
+                step: 1,
+                delay: 0,
+                speed: 50,
+                autoPlay: true,
+                startDelay:0
+            });
+            var c = $('.gallery-col:even').scrollbox({
+                linear: true,
+                step: 1,
+                delay: 0,
+                speed: 50,
+                autoPlay: true
+            }).trigger('backward');
+        }
+        initEvent();
+
+        $(window).on('resize', function (e) {
+            cur_width = document.body.clientWidth;
+            if (is_big_screen !== cur_width > JD_Width) {
+                is_big_screen = cur_width > JD_Width;
+                $gallery.empty();
+
+                render();
+                initEvent();
+            }
+
+        });
+    });
+</script>
 </body>
 </html>

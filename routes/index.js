@@ -6,7 +6,23 @@ var Promise = require("bluebird");
 
 /* GET home page. */
 exports.index = function (req, res) {
-    res.render('web/index', { title: 'Art Partner' });
+    Model.Album.findAll({
+        include: [{
+            model: Model.Photo
+        }],
+        order: [
+            ['seq', 'DESC'],
+            ['id', 'DESC'],
+            [Model.Photo, 'is_cover', 'DESC']
+        ],
+        limit: 20
+    }).then(function (albums) {
+        res.render('web/index', {
+            title: 'Art Partner',
+            albums: albums
+        });
+    });
+
 };
 
 exports.tag = function (req, res, next) {
