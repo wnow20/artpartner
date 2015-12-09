@@ -90,7 +90,6 @@ ul {
 #header .logo {
     display: block;
     font-size: 24px;
-    padding: 40px 5px 10px;
     line-height: 16px;
     float: left;
     border-bottom: 1px solid #eee;
@@ -98,6 +97,9 @@ ul {
     margin-right: 20px;
     text-align: center;
     height: 71px;
+}
+#header .logo img {
+    width: 100%;
 }
 .header-nav-wrap {
     border-bottom: 1px solid #eee;
