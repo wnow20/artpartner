@@ -74,6 +74,8 @@ app.all('/login', admin.login);
 app.all('/login_dialog', admin.login_dialog);
 app.all('/logout', admin.logout);
 app.get('/photo/:uuid_type_ext', require('./routes/photo').index);
+app.get('/album/cover/:uuid_ext', require('./routes/album').index);
+app.get('/album/cover/temp/:uuid_ext', require('./routes/album').temp);
 
 app.get('/', routes.index);
 app.get('/tag/(:id)?', routes.tag);

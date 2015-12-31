@@ -50,6 +50,10 @@ admin.all('/album/list', albumRoute.list);
 admin.all('/album/form/(:id)?', albumRoute.form);
 admin.post('/album/submit', albumRoute.submit);
 admin.all('/album/delete/(:id)?', albumRoute.delete);
+admin.all('/album/(:id)/cover', albumRoute.cover);
+admin.all('/album/cover/', albumRoute.cover);
+admin.all('/album/cover/upload', albumRoute.cover_upload);
+admin.all('/album/cover/crop', albumRoute.cover_crop);
 
 admin.all('/photo/list/(:album_id)?', photoRoute.list);
 admin.all('/photo/form/(:id)?', photoRoute.form);
@@ -66,6 +70,12 @@ admin.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     res.statusCode = 500;
     res.json({ error: 'Admin not Found' });
+});
+admin.use(function(err, req, res, next) {
+    console.error(err);
+    res.setHeader('Content-Type', 'application/json');
+    res.statusCode = 500;
+    res.json({ error: 'Admin Error' });
 });
 
 admin.login = userRoute.login;

@@ -1,0 +1,163 @@
+<style type="text/css" media="screen">
+    .preview-box {
+        position: relative;
+        float: left;
+        margin: 0 5px 5px 0;
+    }
+
+    .preview-progress {
+        position: absolute;
+        bottom: 3px;
+        display: block;
+        width: 100%;
+        background: rgba(100,100,100,.8);
+        border-radius: 20px;
+        box-shadow: inset 1px 1px 3px rgba(50,50,50,.8), -1px 1px rgba(255,255,255,.5);
+        color: #fff;
+        height: 16px;
+        line-height: 16px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .preview-progress-bar {
+        line-height: 14px;
+        font-size: 12px;
+        transition: all .3s;
+        color: #333;
+        background: #ccc;
+        box-shadow: inset 1px 1px 5px 1px rgba(255,255,255,.8);
+        height: 14px;
+        margin: 1px;
+        border-radius: 15px;
+    }
+
+    #jcrop_target {
+        height: 300px;
+    }
+</style>
+<div class="pageContent">
+    <form method="post" action="album/cover/crop" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+        <input type="hidden" id="x" name="x" />
+        <input type="hidden" id="y" name="y" />
+        <input type="hidden" id="w" name="w" />
+        <input type="hidden" id="h" name="h" />
+        <input type="hidden" id="uuid" name="uuid" value="<%= album.uuid %>"/>
+        <div class="pageFormContent nowrap" layoutH="56">
+            <input type="hidden" name="album[id]" value="<%= album.id %>"/>
+            <div>
+                <!-- "js-fileapi-wrapper" -- required class -->
+                <div class="js-fileapi-wrapper upload-btn">
+                    <div class="upload-btn__txt">Choose files</div>
+                    <input id="choose" name="files" type="file" multiple />
+                </div>
+                <% if (album) { %>
+                <div id="beforeImg" style="height: 300px;">
+                    <img src="<%= album.cover + '?' + (new Date).getTime() %>" alt="<%= album.name %>" style="height: 300px;"/>
+                </div>
+                <% } %>
+                <div id="images">
+
+                </div>
+                <div id="Jcrop">
+
+                </div>
+            </div>
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+            </ul>
+        </div>
+    </form>
+    <script>
+        FileAPI.event.on(choose, 'change', function (evt){
+            var files = FileAPI.getFiles(evt); // Retrieve file list
+
+            FileAPI.filterFiles(files, function (file, info/**Object*/){
+                if( /^image/.test(file.type) ){
+                    return  info.width >= 320 && info.height >= 240;
+                }
+                return  false;
+            }, function (files/**Array*/, rejected/**Array*/){
+                if( files.length ){
+                    // Make preview 100x100
+                    FileAPI.each(files, function (file){
+                        FileAPI.Image(file).preview(100).get(function (err, img){
+                            var previewTmpl = '' +
+                                    '<div class="preview-box" id="pre_' + FileAPI.uid(file) + '">' +
+                                    '    <div class="preview-progress">' +
+                                    '       <div class="preview-progress-bar" style="width:0%">0%</div>' +
+                                    '    </div>' +
+                                    '</div>';
+                            var $images = $(images);
+                            var $tmpl = $(previewTmpl);
+
+                            $tmpl.append(img);
+                            $images.append($tmpl);
+                        });
+                    });
+
+                    // Uploading Files
+                    var xhr = FileAPI.upload({
+                        url: 'album/cover/upload',
+                        data: { 'album_id': '<%= album.id %>' },
+                        files: { file: files },
+                        progress: function (evt) {
+                        },
+                        fileprogress: function (evt/**Object*/, file/**Object*/, xhr/**Object*/, options/**Object*/){
+                            var pr = evt.loaded/evt.total * 100;
+                            var $previewBox = $('#pre_' + FileAPI.uid(file));
+                            $('.preview-progress-bar', $previewBox).text(pr + '%').css({ width: pr + '%' });
+                        },
+                        complete: function (err, xhr) {
+                            var msg = $.parseJSON(xhr.response);
+                            var img_src = msg.data.cover + '?' + (new Date).getTime();
+
+                            var $img = $('<img id="jcrop_target"/>').attr('src', img_src);
+                            $('#uuid').val(msg.data.uuid);
+                            $('#beforeImg').hide();
+                            $('#Jcrop').append($img);
+                            $('.js-fileapi-wrapper').hide();
+                            $('#images').hide();
+
+                            setTimeout(function () {
+                                jcrop_api = $.Jcrop('#jcrop_target', {
+                                    onSelect: updateCoords
+                                });
+                                var dim = jcrop_api.getBounds();
+                                console.log(dim);
+                                dim = [
+                                    0.2 * dim[0], 0.2 * dim[1], 0.8 * dim[0], 0.8 * dim[1]
+                                ];
+                                jcrop_api.animateTo(dim);
+                            }, 500);
+
+                        }
+                    });
+                }
+            });
+        });
+        function updateCoords(c) {
+            var $img = $("#jcrop_target");
+            var img = new Image();
+            img.src = $img.attr("src");
+            var height = img.height;
+            var rate = height / 300;
+
+            $('#x').val(Math.round(c.x * rate));
+            $('#y').val(Math.round(c.y * rate));
+            $('#w').val(Math.round(c.w * rate));
+            $('#h').val(Math.round(c.h * rate));
+        }
+    </script>
+</div>
+
+
+<script type="text/javascript">
+    function customvalidXxx(element){
+        if ($(element).val() == "xxx") return false;
+        return true;
+    }
+</script>

@@ -27,7 +27,32 @@
 
         this.profile.title = encodeURIComponent(title);
         this.profile.url = encodeURIComponent(location.href);
+        this.profile.pic = getPic();
     };
+
+    function getPic() {
+        var imgs = document.getElementsByTagName('img');
+        var img, size, result = '';
+        for (var i = 0; i < imgs.length; i++) {
+            img = imgs[i];
+            size = getImgSize(img.src);
+
+            if (size.width >= 300 && size.height >= 300) {
+                result += '||' + img.src;
+            }
+        }
+        return result.substr(2);
+    }
+
+    function getImgSize(filePath){
+        var img=new Image();
+        img.src = filePath;
+
+        return {
+            width: img.width,
+            height: img.height
+        }
+    }
 
     WeiboShare.prototype.initEvent = function () {
         var _ = this;
@@ -41,8 +66,8 @@
             'url=' + this.profile.url,
             'type=' + this.profile.type,
             'title=' + this.profile.title,
-            'appkey=' + this.profile.appkey
-            //'pic=' + this.profile.pic,
+            'appkey=' + this.profile.appkey,
+            'pic=' + this.profile.pic,
         ].join('&');
 
         return this.url + '?' + qs;

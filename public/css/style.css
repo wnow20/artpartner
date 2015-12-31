@@ -412,6 +412,16 @@ ul {
 .photos-list {
     margin-top: 20px;
 }
+.photos-list {
+    text-align: center;
+}
+.photos-list .share {
+    font-size: 14px;
+    float: right;
+}
+.photos-list .share-title {
+    margin-right: .5em;
+}
 
 .photos-list .photo-box {
     margin: 0 auto;
@@ -479,6 +489,9 @@ ul {
     overflow: hidden;
 }
 @media all and (max-width: 768px) {
+    .gallery {
+        top: 50px;
+    }
     .gallery-col {
         width: 49%;
         margin-right: 2%;

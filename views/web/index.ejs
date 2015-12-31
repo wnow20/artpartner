@@ -13,33 +13,39 @@
     <%- include ./include/head %>
 </head>
 <body>
+<img src="public/img/logo_square.jpg" alt="" style="display: none"/>
 <%- include ./include/topbar %>
 <div id="main">
-    <ul class="hidden gallery-list">
+    <div class="hidden gallery-list">
         <% albums.forEach(function (album) { %>
-        <% if (album.photos.length) { %>
-        <li>
+        <% if (album.cover || album.photos.length) { %>
+        <div>
             <a href="/album/<%= album.id %>" class="gallery-album">
-                <img src="<%= album.photos[0].thumbnail_url %>" alt="<%= album.name %>"/>
+                <img src="<%= album.cover || album.photos[0].thumbnail_url %>" alt="<%= album.name %>"/>
                 <div class="gallery-album-intro"><%= album.name %></div>
             </a>
-        </li>
+        </div>
         <% } %>
         <% }); %>
-    </ul>
+    </div>
     <div class="gallery"></div>
 </div>
 <footer class="footer footer-fixed">
     <div class="copyright">COPYRIGHT © 2015. WAGNYI. ALL RIGHTS RESERVED</div>
 </footer>
 <%- include ./include/script %>
-<script src="/public/js/jquery.scrollbox.js"></script>
+<link rel="stylesheet" href="/public/js/ZScroll/ZScroll.css"/>
+<script src="/public/js/ZScroll/ZScroll.js"></script>
+<style>
+    .ZScroll-item {
+        width: 100%;
+    }
+</style>
 <script>
-    $(function () {
+    $(window).on('load', function () {
         var $gallery = $('.gallery');
         var tmpl = '' +
-                '<div class="gallery-col">' +
-                '    <ul></ul>' +
+                '<div class="gallery-col ZScroll">' +
                 '</div>';
 
         var $galleryList = $('.gallery-list').children();
@@ -64,11 +70,10 @@
         function render() {
             for (var i = 0; i < cols.length; i++) {
                 var $col = $(tmpl);
-                var $ul = $col.find('ul');
-                $ul.append(cols[i]);
+                $col.append(cols[i]);
                 if (!is_big_screen) {
                     ++i;
-                    $ul.append(cols[i]);
+                    $col.append(cols[i]);
                 }
                 $gallery.append($col);
             }
@@ -76,21 +81,34 @@
         render();
 
         function initEvent() {
-            $('.gallery-col:nth-of-type(2n)').scrollbox({
-                linear: true,
-                step: 1,
-                delay: 0,
-                speed: 50,
+            var c = $('.gallery-col:even').zScroll({
                 autoPlay: true,
-                startDelay:0
+                autoPlaySpeed: 50,
+                speed: 500,
+                sleep: 0,
+                distance: 1,
+                direction: 0,
+                vertical: true,
+                initialSlide: 0,
+                pauseOnHover: true,
+                infinite: true,
+                smooth: true,
+                debug: true
             });
-            var c = $('.gallery-col:even').scrollbox({
-                linear: true,
-                step: 1,
-                delay: 0,
-                speed: 50,
-                autoPlay: true
-            }).trigger('backward');
+
+            $('.gallery-col:odd').zScroll({
+                autoPlay: true,
+                autoPlaySpeed: 50,
+                speed: 500,
+                sleep: 0,
+                distance: 1,
+                direction: 1,
+                initialSlide: 0,
+                vertical: true,
+                pauseOnHover: true,
+                infinite: true,
+                smooth: true
+            });
         }
         initEvent();
 
@@ -102,8 +120,10 @@
 
                 render();
                 initEvent();
+            } else {
+                $('.gallery-col').zScroll('destroy');
+                initEvent();
             }
-
         });
     });
 </script>

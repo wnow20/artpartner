@@ -68,6 +68,7 @@
                 <a title="删除" target="ajaxTodo" href="album/delete?ids=<%= item.id %>" class="btnDel">删除</a>
                 <a title="编辑" target="dialog" href="album/form/<%= item.id %>" class="btnEdit">编辑</a>
                 <a title="<%= item.name %>照片管理" target="navTab" rel="photo_list" href="photo/list/<%= item.id %>">管理照片</a>
+                <a title="设置封面" target="dialog" rel="album_cover" width="600" height="400" href="album/<%= item.id %>/cover/">设置封面</a>
             </td>
         </tr>
         <% }); %>

@@ -29,9 +29,9 @@
             <div style="margin-right: -10px;">
                 <div class="waterfull-photos" id="J_waterfull">
                     <% albums.forEach(function(album) {%>
-                        <% if (album.photos.length) {%>
+                        <% if (album.cover || album.photos.length) {%>
                         <div class="waterfull-item">
-                            <a href="/album/<%= album.id %>"><img src="<%= album.photos[0].thumbnail_url %>" alt="<%= album.name %>"/></a>
+                            <a href="/album/<%= album.id %>"><img src="<%= album.cover || album.photos[0].thumbnail_url %>" alt="<%= album.name %>"/></a>
                             <div class="waterfull-intro"><span class="waterfull-intro-inner"><%= album.name %></span></div>
                         </div>
                         <% } %>

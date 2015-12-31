@@ -3,7 +3,7 @@
   "db_port": 3306,
   "db_datebase": "artpartner_dev",
   "db_name": "root",
-  "db_password": "root",
+  "db_password": "Opslter1",
 
   "upload_path": "/Users/ge/workspace/webstrom/artpartner/upload/"
 }
