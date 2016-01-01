@@ -481,8 +481,13 @@ ul {
     width: 100%;
     overflow: hidden;
 }
+@media (min-width: 789px) {
+    .gallery {
+        margin-left: 1.45%;
+    }
+}
 .gallery-col {
-    width: 24%;
+    width: 23.6%;
     float: left;
     height: 100%;
     margin-right: 0.9%;
