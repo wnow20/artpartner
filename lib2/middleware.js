@@ -4,11 +4,11 @@ var Model = require(cwd + '/lib2/model');
 exports.genCache = function(app) {
     return function (req, res, next) {
         app.cache = app.cache || {};
-        if (app.cache.topnav) {
-            app.locals.topnav = app.cache.topnav;
-
-            return next();
-        }
+        //if (app.cache.topnav) {
+        //    app.locals.topnav = app.cache.topnav;
+        //
+        //    return next();
+        //}
 
         Model.Tag.findAll({
             where: {
