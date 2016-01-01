@@ -436,6 +436,7 @@ ul {
     font-size: 12px;
     font-weight: 600;
     text-align: left;
+    font-style: italic;
 }
 @media all and (min-width: 769px) {
     .photos-list .photo-box {
