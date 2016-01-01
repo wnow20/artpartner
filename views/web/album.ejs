@@ -43,6 +43,7 @@
                     <% photos.forEach(function(photo) { %>
                         <div class="photo-box">
                             <img src="<%= photo.large_url %>" alt=""/>
+                            <% if (photo.intro) { %>
                             <div class="photo-intro">
                                 <%= photo.intro %>
                                 <!--<div class="photo-share">
@@ -50,6 +51,7 @@
                                     <a href="#"><i class="fa fa-wechat"></i></a>
                                 </div>-->
                             </div>
+                            <% } %>
                         </div>
                     <% }); %>
                 <% } %>

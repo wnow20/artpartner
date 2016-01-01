@@ -28,7 +28,6 @@
             <li><a class="add" href="photo/upload?album_id=<%= album.id%>" target="dialog"><span>添加</span></a></li>
             <li><a class="edit" href="photo/form/{sid_photo}" target="dialog" warn="请选择一条数据"><span>修改</span></a></li>
             <li><a title="确实要删除这些数据吗?" target="selectedTodo" rel="ids" postType="string" href="photo/delete" class="delete"><span>删除</span></a></li>
-            <li><a class="icon" href="photo/set_cover/{sid_photo}" target="ajaxTodo" warn="请选择一条数据"><span>设为封面</span></a></li>
         </ul>
     </div>
     <table class="table" width="100%" layoutH="138">
@@ -38,7 +37,6 @@
             <th width="120">名称</th>
             <th width="120">所属相册</th>
             <th>介绍</th>
-            <th width="90">是否为封面</th>
             <th>顺序</th>
             <th width="160">创建日期</th>
             <th width="160">操作</th>
@@ -51,13 +49,6 @@
             <td><%= item.name %></td>
             <td><%= item.album && item.album.name %></td>
             <td><%= item.intro %></td>
-            <td>
-                <% if (item.is_cover) { %>
-                    是
-                <% } else { %>
-                    否 <a href="photo/set_cover/<%= item.id %>" class="J_set_as_cover" target="ajaxTodo">设置封面?</a>
-                <% } %>
-            </td>
             <td><%= item.seq %></td>
             <td><%= moment(item.create_time).format('YYYY-MM-DD HH:mm:ss') %></td>
             <td>

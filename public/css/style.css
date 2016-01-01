@@ -425,7 +425,7 @@ ul {
 
 .photos-list .photo-box {
     margin: 0 auto;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     position: relative;
     overflow: hidden;
 }
@@ -510,7 +510,7 @@ ul {
     overflow: hidden;
 }
 .gallery-col .ZScroll-item {
-    padding: 3px 0;
+    padding: 5px 0;
 }
 @media all and (max-width: 768px) {
     .gallery {

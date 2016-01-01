@@ -244,26 +244,26 @@ exports.delete = function (req, res, next) {
     });
 };
 
-exports.set_cover = function (req, res, next) {
-    var id = req.params.id;
-
-
-    var sql1 = '' +
-        'update photo t set is_cover = 0 where t.id IN (' +
-        '    select a.id from (' +
-        '        select id from photo where `album_id` IN (select album_id from photo where id = ' + id + ') and id != ' + id +
-        '    ) a' +
-        ');';
-
-    var sql2 = 'update photo set is_cover = 1 where id = ' + id;
-
-    db.sequelize.query(sql1).spread(function (results, metadata) {
-        db.sequelize.query(sql2).spread(function (results, metadata) {
-            var msg = DwzMsg.success('设置成功');
-            msg.setNavTabId('photo_list');
-            msg.setForwardUrl('phone/list');
-
-            res.json(msg);
-        });
-    })
-};
+//exports.set_cover = function (req, res, next) {
+//    var id = req.params.id;
+//
+//
+//    var sql1 = '' +
+//        'update photo t set is_cover = 0 where t.id IN (' +
+//        '    select a.id from (' +
+//        '        select id from photo where `album_id` IN (select album_id from photo where id = ' + id + ') and id != ' + id +
+//        '    ) a' +
+//        ');';
+//
+//    var sql2 = 'update photo set is_cover = 1 where id = ' + id;
+//
+//    db.sequelize.query(sql1).spread(function (results, metadata) {
+//        db.sequelize.query(sql2).spread(function (results, metadata) {
+//            var msg = DwzMsg.success('设置成功');
+//            msg.setNavTabId('photo_list');
+//            msg.setForwardUrl('phone/list');
+//
+//            res.json(msg);
+//        });
+//    })
+//};
