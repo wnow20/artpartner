@@ -11,9 +11,8 @@ exports.index = function (req, res) {
             model: Model.Photo
         }],
         order: [
-            ['seq', 'DESC'],
+            ['seq', 'ASC'],
             ['id', 'DESC'],
-            [Model.Photo, 'is_cover', 'DESC']
         ],
         limit: 20
     }).then(function (albums) {
@@ -41,7 +40,6 @@ exports.tag = function (req, res, next) {
                 }],
                 order: [
                     ['id', 'DESC'],
-                    [Model.Photo, 'is_cover', 'DESC']
                 ],
                 offset: page.getOffset(),
                 limit: page.numPerPage
@@ -74,7 +72,7 @@ exports.album = function (req, res, next) {
                 id: id
             },
             order: [
-                [Model.Photo, 'seq', 'DESC']
+                [Model.Photo, 'seq', 'ASC']
             ],
             include: [{
                 model: Model.Photo
