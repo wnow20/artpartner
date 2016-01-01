@@ -36,7 +36,6 @@
             <th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
             <th width="120">名称</th>
             <th width="120">所属相册</th>
-            <th>介绍</th>
             <th>顺序</th>
             <th width="160">创建日期</th>
             <th width="160">操作</th>
@@ -48,7 +47,6 @@
             <td><input name="ids" value="<%= item.id %>" type="checkbox"></td>
             <td><%= item.name %></td>
             <td><%= item.album && item.album.name %></td>
-            <td><%= item.intro %></td>
             <td><%= item.seq %></td>
             <td><%= moment(item.create_time).format('YYYY-MM-DD HH:mm:ss') %></td>
             <td>
