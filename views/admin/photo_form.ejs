@@ -20,9 +20,13 @@
                 <input type="text" name="photo[name]" maxlength="20" class="textInput required" size="30" value="<%= photo.name %>"/>
             </div>
             <div class="clearfix mt10 mb10">
-                <label>介绍：</label>
-                <textarea name="photo[intro]" class="textInput required" cols="40" rows="3"><%= photo.intro %></textarea>
+                <label>排序：</label>
+                <input type="text" name="photo[seq]" maxlength="20" class="textInput required" size="30" value="<%= photo.seq %>"/>
             </div>
+            <dl class="clearfix mt10 mb10">
+                <dt>介绍：</dt>
+                <dd style="width: 420px;"><textarea name="photo[intro]" class="editor" tools="simple" cols="66" rows="8"><%= photo.intro %></textarea></dd>
+            </dl>
             <div class="clearfix mt10 mb10">
                 <label>图片：</label>
                 <% if (photo.id) { %>

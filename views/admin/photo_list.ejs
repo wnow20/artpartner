@@ -39,6 +39,7 @@
             <th width="120">所属相册</th>
             <th>介绍</th>
             <th width="90">是否为封面</th>
+            <th>顺序</th>
             <th width="160">创建日期</th>
             <th width="160">操作</th>
         </tr>
@@ -57,6 +58,7 @@
                     否 <a href="photo/set_cover/<%= item.id %>" class="J_set_as_cover" target="ajaxTodo">设置封面?</a>
                 <% } %>
             </td>
+            <td><%= item.seq %></td>
             <td><%= moment(item.create_time).format('YYYY-MM-DD HH:mm:ss') %></td>
             <td>
                 <a title="删除" target="ajaxTodo" href="photo/delete?ids=<%= item.id %>" class="btnDel">删除</a>

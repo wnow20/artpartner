@@ -73,10 +73,13 @@ exports.album = function (req, res, next) {
             where: {
                 id: id
             },
+            order: [
+                [Model.Photo, 'seq', 'DESC']
+            ],
             include: [{
                 model: Model.Photo
             }]
-        })
+        }),
     ]).then(function (datas) {
         res.render('web/album', {
             tags: datas[0] || {},

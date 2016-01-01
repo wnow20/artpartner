@@ -56,7 +56,8 @@ var Photo = db.sequelize.define('photo', {
     middle_url: { type: Sequelize.STRING },
     thumbnail_url: { type: Sequelize.STRING },
     is_cover: { type: Sequelize.BOOLEAN },
-    del_flag: { type: Sequelize.BOOLEAN, defaultValue: false }
+    del_flag: { type: Sequelize.BOOLEAN, defaultValue: false },
+    seq: { type: Sequelize.INTEGER }
 }, {
     tableName: 'photo'
 });
