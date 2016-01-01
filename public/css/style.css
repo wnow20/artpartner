@@ -444,12 +444,6 @@ ul {
         width: 90%;
     }
 }
-@media all and (min-width: 1601px) {
-    .photos-list .photo-box {
-        max-width: 1200px;
-        width: 90%;
-    }
-}
 .photos-list .photo-intro {
     color: #333;
     text-align: center;
