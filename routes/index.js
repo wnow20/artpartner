@@ -73,6 +73,7 @@ exports.album = function (req, res, next) {
             },
             order: [
                 [Model.Photo, 'seq', 'ASC']
+                [Model.Photo, 'id', 'ASC']
             ],
             include: [{
                 model: Model.Photo
