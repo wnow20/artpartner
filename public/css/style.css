@@ -432,6 +432,10 @@ ul {
 .photos-list .photo-box img {
     width: 100%;
 }
+.album-title {
+    font-size: 10px;
+    font-weight: normal;
+}
 @media all and (min-width: 769px) {
     .photos-list .photo-box {
         max-width: 600px;
