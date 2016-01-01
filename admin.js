@@ -60,7 +60,6 @@ admin.all('/photo/form/(:id)?', photoRoute.form);
 admin.all('/photo/upload', photoRoute.upload);
 admin.all('/photo/submit', photoRoute.submit);
 admin.all('/photo/delete/(:id)?', photoRoute.delete);
-admin.all('/photo/set_cover/(:id)?', photoRoute.set_cover);
 
 // 公示,关于我,联系的管理
 admin.all('/asdf/form/:type', asdfRoute.form);
