@@ -81,6 +81,9 @@ exports.list = function (req, res, next) {
         include: {
             model: Model.Album
         },
+        order: [
+            ['id', 'ASC']
+        ],
         offset: page.getOffset(),
         limit: page.numPerPage
     }).then(function (result) {
