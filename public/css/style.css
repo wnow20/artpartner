@@ -503,14 +503,14 @@ ul {
     }
 }
 .gallery-col {
-    width: 23.9%;
+    width: 23.7%;
     float: left;
     height: 100%;
-    margin-right: 0.6%;
+    margin-right: 0.8%;
     overflow: hidden;
 }
 .gallery-col .ZScroll-item {
-    padding: 5px 0;
+    padding: 4px 0;
 }
 @media all and (max-width: 768px) {
     .gallery {
