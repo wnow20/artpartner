@@ -82,6 +82,7 @@ exports.list = function (req, res, next) {
             model: Model.Album
         },
         order: [
+            ['seq', 'ASC'],
             ['id', 'ASC']
         ],
         offset: page.getOffset(),
