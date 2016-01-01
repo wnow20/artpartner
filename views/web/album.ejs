@@ -14,9 +14,8 @@
 </head>
 <body>
 <% if (album.cover || album.photos.length) { %>
-<img src="<%= album.cover || album.photos[0].thumbnail_url %>" alt="<% album.name %>" style="display: none"/>
+<div style="display: none"><img src="<%= album.cover || album.photos[0].middle_url %>" alt="<% album.name %>"/></div>
 <% } %>
-<img src="<%= album.cover %>" alt="<%= album.name %>" style="display: none"/>
 <%- include ./include/topbar %>
 <div id="main">
     <div class="container-flex">
