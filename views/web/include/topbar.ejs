@@ -7,7 +7,7 @@
             <div class="header-nav-wrap clearfix">
                 <nav>
                     <ul class="header-nav">
-                        <li><a href="/">Home</a></li>
+                        <!--<li><a href="/">Home</a></li>-->
                         <% topnav.forEach(function (tag) { %>
                         <li><a href="/tag/<%= tag.id %>" title="<%= tag.intro %>"><%= tag.name %></a></li>
                         <% }); %>
@@ -40,7 +40,7 @@
         </div>
         <nav class="mo-head-nav">
             <ul>
-                <li><a class="nav-item-a" href="/">Home</a></li>
+                <!--<li><a class="nav-item-a" href="/">Home</a></li>-->
                 <% topnav.forEach(function (tag) { %>
                 <li><a class="nav-item-a" href="/tag/<%= tag.id %>" title="<%= tag.intro %>"><%= tag.name %></a></li>
                 <% }); %>
