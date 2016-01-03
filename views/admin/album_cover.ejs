@@ -122,18 +122,16 @@
                             $('.js-fileapi-wrapper').hide();
                             $('#images').hide();
 
-                            setTimeout(function () {
+                            $img.on('load', function () {
                                 jcrop_api = $.Jcrop('#jcrop_target', {
                                     onSelect: updateCoords
                                 });
                                 var dim = jcrop_api.getBounds();
-                                console.log(dim);
                                 dim = [
                                     0.2 * dim[0], 0.2 * dim[1], 0.8 * dim[0], 0.8 * dim[1]
                                 ];
                                 jcrop_api.animateTo(dim);
-                            }, 500);
-
+                            });
                         }
                     });
                 }
