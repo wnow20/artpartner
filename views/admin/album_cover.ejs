@@ -131,7 +131,11 @@
                                     0.2 * dim[0], 0.2 * dim[1], 0.8 * dim[0], 0.8 * dim[1]
                                 ];
 
-                                initDim();
+                                $('#x').val(0);
+                                $('#y').val(0);
+                                $('#w').val(this.width);
+                                $('#h').val(this.height);
+
                                 jcrop_api.animateTo(dim);
                                 $('#submitBtn').show();
                             });
@@ -140,16 +144,6 @@
                 }
             });
         });
-        function initDim() {
-            var $img = $("#jcrop_target");
-            var img = new Image();
-            img.src = $img.attr("src");
-
-            $('#x').val(0);
-            $('#y').val(0);
-            $('#w').val(img.width);
-            $('#h').val(img.height);
-        }
         function updateCoords(c) {
             var $img = $("#jcrop_target");
             var img = new Image();
