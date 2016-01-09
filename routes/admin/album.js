@@ -183,6 +183,9 @@ exports.cover_crop = function (req, res, next) {
     var y = req.body.y * 1;
     var w = req.body.w * 1;
     var h = req.body.h * 1;
+
+    console.log(x,y,w,h);
+
     var _album = null;
     var filepath = null;
     var cropedPath = null;

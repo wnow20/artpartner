@@ -146,15 +146,24 @@
         });
         function updateCoords(c) {
             var $img = $("#jcrop_target");
-            var img = new Image();
-            img.src = $img.attr("src");
-            var height = img.height;
+            var height = $img[0].height;
+            var width = $img[0].width;
             var rate = height / 300;
 
-            $('#x').val(Math.round(c.x * rate));
-            $('#y').val(Math.round(c.y * rate));
-            $('#w').val(Math.round(c.w * rate));
-            $('#h').val(Math.round(c.h * rate));
+            var x = Math.round(c.x * rate);
+            var y = Math.round(c.y * rate);
+            var w = Math.round(c.w * rate);
+            var h = Math.round(c.h * rate);
+
+            console.log(width, height);
+
+            w = w > width? width : w;
+            h = h > height? height : h;
+
+            $('#x').val(x);
+            $('#y').val(y);
+            $('#w').val(w);
+            $('#h').val(h);
         }
     </script>
 </div>
