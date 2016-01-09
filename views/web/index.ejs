@@ -44,74 +44,75 @@
     }
 </style>
 <script>
-    $(window).on('load', function () {
-        var $gallery = $('.gallery');
-        var tmpl = '' +
-                '<div class="gallery-col ZScroll">' +
-                '</div>';
+    var $gallery = $('.gallery');
+    var tmpl = '' +
+            '<div class="gallery-col ZScroll">' +
+            '</div>';
 
-        var $galleryList = $('.gallery-list').children();
+    var $galleryList = $('.gallery-list').children();
 
-        var JD_Width = 768;
-        var cur_width = document.body.clientWidth;
-        var is_big_screen = cur_width > JD_Width;
-        var cols_count = 4;
+    var JD_Width = 768;
+    var cur_width = document.body.clientWidth;
+    var is_big_screen = cur_width > JD_Width;
+    var cols_count = 4;
 
-        var cols = [];
+    var cols = [];
 
-        function init() {
-            $galleryList.each(function (index, ele) {
-                var aim = index%cols_count;
-                cols[aim] = cols[aim] || [];
-                cols[aim].push(ele);
-            });
-        }
+    function init() {
+        $galleryList.each(function (index, ele) {
+            var aim = index%cols_count;
+            cols[aim] = cols[aim] || [];
+            cols[aim].push(ele);
+        });
+    }
 
-        init();
+    init();
 
-        function render() {
-            for (var i = 0; i < cols.length; i++) {
-                var $col = $(tmpl);
+    function render() {
+        for (var i = 0; i < cols.length; i++) {
+            var $col = $(tmpl);
+            $col.append(cols[i]);
+            if (!is_big_screen) {
+                ++i;
                 $col.append(cols[i]);
-                if (!is_big_screen) {
-                    ++i;
-                    $col.append(cols[i]);
-                }
-                $gallery.append($col);
             }
+            $gallery.append($col);
         }
-        render();
+    }
+    render();
 
-        function initEvent() {
-            var c = $('.gallery-col:even').zScroll({
-                autoPlay: true,
-                autoPlaySpeed: 50,
-                speed: 500,
-                sleep: 0,
-                distance: 1,
-                direction: 0,
-                vertical: true,
-                initialSlide: 0,
-                pauseOnHover: true,
-                infinite: true,
-                smooth: true,
-                debug: true
-            });
+    function initEvent() {
+        var c = $('.gallery-col:even').zScroll({
+            autoPlay: true,
+            autoPlaySpeed: 50,
+            speed: 500,
+            sleep: 0,
+            distance: 1,
+            direction: 0,
+            vertical: true,
+            initialSlide: 0,
+            pauseOnHover: true,
+            infinite: true,
+            smooth: true,
+            debug: true
+        });
 
-            $('.gallery-col:odd').zScroll({
-                autoPlay: true,
-                autoPlaySpeed: 50,
-                speed: 500,
-                sleep: 0,
-                distance: 1,
-                direction: 1,
-                initialSlide: 0,
-                vertical: true,
-                pauseOnHover: true,
-                infinite: true,
-                smooth: true
-            });
-        }
+        $('.gallery-col:odd').zScroll({
+            autoPlay: true,
+            autoPlaySpeed: 50,
+            speed: 500,
+            sleep: 0,
+            distance: 1,
+            direction: 1,
+            initialSlide: 0,
+            vertical: true,
+            pauseOnHover: true,
+            infinite: true,
+            smooth: true
+        });
+    }
+
+    $(window).on('load', function () {
         initEvent();
 
         $(window).on('resize', function (e) {

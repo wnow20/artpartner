@@ -162,7 +162,7 @@ exports.cover_upload = function (req, res, next) {
 
         utils.FileUtil.mkdirIfNotExists(savedParent)
             .then(function () {
-                return sharp(file.path).resize(null, 600).toFile(savedPath);
+                return sharp(file.path).toFile(savedPath);
             }).then(function () {
                 var cover = '/album/cover/temp/' + uuid + extName;
                 var _album = {
