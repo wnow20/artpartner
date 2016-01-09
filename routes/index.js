@@ -51,7 +51,7 @@ exports.tag = function (req, res, next) {
         res.render('web/tag', {
             title: datas[0] && datas[0].name,
             tags: datas[0] || {},
-            albums: datas[1].rows || {},
+            albums: datas[1] || {},
             page: page
         });
     }).then(null, function(err) {
