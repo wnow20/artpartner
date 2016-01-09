@@ -33,16 +33,16 @@ exports.tag = function (req, res, next) {
         // 查询所属分类tag的全部相册,如果tag_id为空,则查询所有
         (function(id) {
             var where = id? { tag_id: id } : {};
-            return Model.Album.findAndCountAll({
+            return Model.Album.findAll({
                 where: where,
                 include: [{
                     model: Model.Photo
                 }],
                 order: [
                     ['id', 'DESC'],
-                ],
-                offset: page.getOffset(),
-                limit: page.numPerPage
+                ]
+                //offset: page.getOffset(),
+                //limit: page.numPerPage
             });
         }(id))
     ]).then(function (datas) {
