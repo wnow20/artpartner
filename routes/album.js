@@ -24,6 +24,12 @@ exports.index = function (req, res, next) {
         var filepath = Config.upload_path + 'cover/' + uuid_ext;
         fs.exists(filepath, function (exists) {
             if (exists) {
+                var stats = fs.statSync(filepath);
+
+                res.setHeader('Last-Modified', stats.mtime);
+                res.setHeader('Cache-Control', 'public, max-age=0');
+                res.setHeader('X-Powered-By', 'Express');
+
                 var stream = fs.createReadStream(filepath);
                 stream.pipe(res);
             } else {
