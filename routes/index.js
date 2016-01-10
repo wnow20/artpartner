@@ -39,6 +39,7 @@ exports.tag = function (req, res, next) {
                     model: Model.Photo
                 }],
                 order: [
+                    ['seq', 'DESC'],
                     ['id', 'DESC'],
                 ]
                 //offset: page.getOffset(),
