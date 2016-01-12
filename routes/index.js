@@ -11,7 +11,7 @@ exports.index = function (req, res) {
             model: Model.Photo
         }],
         order: [
-            ['seq', 'ASC'],
+            ['seq', 'DESC'],
             ['id', 'DESC'],
         ],
         limit: 20
