@@ -54,17 +54,7 @@ exports.index = function (req, res, next) {
             res.setHeader("Expires", (new Date((new Date()).getTime() + 60 * 60 * 24 * 30 * 1000)).toUTCString());
             res.setHeader("Cache-Control", "max-age=" + (60 * 60 * 24 * 30 * 1000));
 
-            var stream = fs.createReadStream(filepath);
-
-            if (acceptEncoding.match(/\bgzip\b/)) {
-                res.setHeader('Content-Encoding', 'gzip');
-                stream = stream.pipe(zlib.createGzip());
-            } else if (acceptEncoding.match(/\bdeflate\b/)) {
-                res.setHeader('Content-Encoding', 'deflate');
-                stream = stream.pipe(zlib.createDeflate());
-            }
-
-            stream.pipe(res);
+            fs.createReadStream(filepath).pipe(res);
         });
     });
 };
