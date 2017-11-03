@@ -40,7 +40,9 @@ app.use(express.bodyParser({ keepExtensions: true, uploadDir: cwd +'/tmp' }));
 app.use(cookieParser());
 app.use(session({
     name: 'sid',
-    secret: 'whosyourdaddy'
+    secret: 'whosyourdaddy',
+    resave: false,
+    saveUninitialized: false,
 }));
 
 app.locals.moment = moment;
