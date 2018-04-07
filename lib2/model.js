@@ -35,7 +35,7 @@ var Album = db.sequelize.define('album', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
     tag_id: { type: Sequelize.INTEGER },
     name: { type: Sequelize.STRING },
-    intro: { type: Sequelize.STRING },
+    intro: { type: Sequelize.TEXT },
     seq: { type: Sequelize.INTEGER },
     del_flag: { type: Sequelize.BOOLEAN, defaultValue: false },
     uuid: { type: Sequelize.STRING },
