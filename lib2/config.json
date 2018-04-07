@@ -1,9 +1,9 @@
 {
-  "db_host": "www.asdfz.cn",
+  "db_host": "www.snippets.cn",
   "db_port": 3306,
   "db_datebase": "artpartner_dev",
   "db_name": "root",
   "db_password": "root",
 
-  "upload_path": "/Users/ge/workspace/webstrom/artpartner/upload/"
+  "upload_path": "/Users/ge/workspace/wnow20/artpartner/upload/"
 }

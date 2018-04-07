@@ -105,6 +105,11 @@ exports.login = function (req, res, next) {
         }
     }).then(function (user) {
         var redirect = req.query.redirect;
+        if (!user) {
+            res.message('账号或密码错误！', 'error');
+            res.redirect('/login');
+            return;
+        }
         var salt = user.salt;
         bcrypt.hash(_user.password, salt, function(err, hash) {
             if (hash === user.password) {

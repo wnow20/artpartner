@@ -16,10 +16,10 @@
                     <% }); %>
                 </select>
             </p>
-            <p>
-                <label>介绍：</label>
-                <input type="text" name="album[intro]" class="textInput" size="30" value="<%= album.intro %>"/>
-            </p>
+            <dl class="clearfix mt10 mb10">
+                <dt>介绍：</dt>
+                <dd style="width: 420px;"><textarea name="album[intro]" class="editor" tools="simple" cols="66" rows="8"><%- album.intro %></textarea></dd>
+            </dl>
             <p>
                 <label>排序：</label>
                 <input type="text" name="album[seq]" class="textInput" size="30" value="<%= album.seq %>"/>

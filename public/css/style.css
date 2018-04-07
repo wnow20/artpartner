@@ -439,6 +439,10 @@ ul {
 .photos-list .photo-box img {
     width: 100%;
 }
+.photos-list .album-intro {
+    margin: 30px auto;
+    text-align: left;
+}
 .album-title {
     font-size: 12px;
     font-weight: 600;
