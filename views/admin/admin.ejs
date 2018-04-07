@@ -34,23 +34,13 @@
             <div class="accordion" fillSpace="sidebar">
                 <div class="accordionHeader">
                     <h2>
-                        <span>Folder</span>用户管理
-                    </h2>
-                </div>
-                <div class="accordionContent">
-                    <ul class="tree treeFolder">
-                        <li><a href="user/form/<%= principal.id  %>" target="navTab" rel="user_form">基本信息</a></li>
-                    </ul>
-                </div>
-                <div class="accordionHeader">
-                    <h2>
                         <span>Folder</span>作品管理
                     </h2>
                 </div>
                 <div class="accordionContent">
                     <ul class="tree treeFolder">
-                        <li><a href="tag/list" target="navTab" rel="tag_list">分类管理</a></li>
                         <li><a href="/admin/album/list" target="navTab" rel="album_list">作品集</a></li>
+                        <li><a href="tag/list" target="navTab" rel="tag_list">分类管理</a></li>
                     </ul>
                 </div>
                 <div class="accordionHeader">
@@ -63,6 +53,16 @@
                         <li><a href="/admin/asdf/form/notice" target="navTab" rel="asdf_form">公示</a></li>
                         <li><a href="/admin/asdf/form/aboutus" target="navTab" rel="asdf_form">关于我</a></li>
                         <li><a href="/admin/asdf/form/contact" target="navTab" rel="asdf_form">联系</a></li>
+                    </ul>
+                </div>
+                <div class="accordionHeader">
+                    <h2>
+                        <span>Folder</span>用户管理
+                    </h2>
+                </div>
+                <div class="accordionContent">
+                    <ul class="tree treeFolder">
+                        <li><a href="user/form/<%= principal.id  %>" target="navTab" rel="user_form">基本信息</a></li>
                     </ul>
                 </div>
             </div>
