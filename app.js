@@ -35,7 +35,9 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({
+    limit: '1000kb'
+}));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: cwd +'/tmp' }));
 app.use(cookieParser());
 app.use(session({

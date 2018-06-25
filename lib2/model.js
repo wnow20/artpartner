@@ -16,7 +16,7 @@ var Asdf = db.sequelize.define('asdf', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
     notice: { type: Sequelize.STRING },
     contact: { type: Sequelize.STRING },
-    aboutus: { type: Sequelize.STRING }
+    aboutus: { type: Sequelize.BLOB }
 }, {
     tableName: 'asdf'
 });
