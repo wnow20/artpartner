@@ -2,10 +2,13 @@ var cwd = process.cwd();
 var Model = require(cwd + '/lib2/model');
 var DwzMsg = require(process.cwd() + '/lib/DwzMsg');
 var Page = require(process.cwd() + '/lib/page');
+var utils = require(cwd + '/lib2/utils');
 var Promise = require("bluebird");
 
 /* GET home page. */
 exports.index = function (req, res) {
+    var limit = utils.isMobile(req.header("User-Agent")) ? 10 : 20;
+
     Model.Album.findAll({
         include: [{
             model: Model.Photo
@@ -14,7 +17,7 @@ exports.index = function (req, res) {
             ['seq', 'DESC'],
             ['id', 'DESC'],
         ],
-        limit: 20
+        limit: limit,
     }).then(function (albums) {
         res.render('web/index', {
             title: 'HOME - WANGYI',
