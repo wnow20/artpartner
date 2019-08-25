@@ -42,8 +42,6 @@
                 <div class="no-photo-in-this-tag">no photo.</div>
                 <% } %>
                 <div class="last-page-placeholder" style="display: none">no more works.</div>
-                <div class="scroll-dev"></div>
-                <div class="gap-dev"></div>
             </div>
         </div>
     </div>
@@ -86,13 +84,8 @@
         var loading = false;
         var tagId = location.pathname.substring("/tag/".length) * 1;
 
-        var scrollCount = 1;
         $(window).scroll(function () {
-            $('.scroll-dev').text("scroll..." + (scrollCount++));
             var needLoadNext = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2 - window.innerHeight / 2;
-
-            $('.gap-dev').text("gap-dev: " + needLoadNext);
-
             if (needLoadNext && totalPage > currentPage && !loading) {
                 loading = true;
                 $.ajax({
