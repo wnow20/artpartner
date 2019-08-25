@@ -71,7 +71,7 @@
 
     $(function () {
         var J_waterfull = $('#J_waterfull');
-        J_waterfull.masonry({
+        var $grid = J_waterfull.masonry({
             itemSelector: '.waterfull-item',
             percentPosition: true
         });
@@ -108,6 +108,10 @@
                                     .masonry( 'appended', $item );
                             }
                         })
+
+                        J_waterfull.imagesLoaded().progress( function() {
+                            J_waterfull.masonry('layout');
+                        });
 
                         loading = false;
                         currentPage = currentPage + 1;
