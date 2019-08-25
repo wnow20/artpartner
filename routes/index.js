@@ -63,12 +63,13 @@ exports.tag = function (req, res, next) {
         next(err);
     });
 };
-function findPrev(id) {
+function findPrev(id, seq) {
     return Model.Album.findOne({
         where: {
-            id: {
-                lt: id
-            }
+            $or: [
+                {seq: { gt: seq}},
+                {seq: seq, id: { gt : id }}
+            ]
         },
         order: [
             ['seq', 'DESC'],
@@ -77,12 +78,13 @@ function findPrev(id) {
     })
 }
 
-function findNext(id) {
+function findNext(id, seq) {
     return Model.Album.findOne({
         where: {
-            id: {
-                gt: id
-            }
+            $or: [
+                {seq: { lt: seq}},
+                {seq: seq, id: { lt : id }}
+            ]
         },
         order: [
             ['seq', 'ASC'],
@@ -110,16 +112,21 @@ exports.album = function (req, res, next) {
             include: [{
                 model: Model.Photo
             }]
-        }),
-        findPrev(id),
-        findNext(id),
+        })
     ]).then(function (datas) {
-        res.render('web/album', {
-            tags: datas[0] || {},
-            album: datas[1] || {},
-            title: datas[1] && datas[1].name,
-            prevAlbum: datas[2] || {},
-            nextAlbum: datas[3] || {}
+        var seq = datas[1] && datas[1].seq || 0;
+
+        Promise.all([
+            findPrev(id, seq),
+            findNext(id, seq),
+        ]).then(function (results) {
+            res.render('web/album', {
+                tags: datas[0] || {},
+                album: datas[1] || {},
+                title: datas[1] && datas[1].name,
+                prevAlbum: results[0] || {},
+                nextAlbum: results[1] || {}
+            });
         });
     });
 };
