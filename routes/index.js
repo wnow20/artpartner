@@ -63,6 +63,31 @@ exports.tag = function (req, res, next) {
         next(err);
     });
 };
+function findPrev(id) {
+    return Model.Album.findOne({
+        where: {
+            id: {
+                lt: id
+            }
+        },
+        order: [
+            ['id', 'DESC']
+        ]
+    })
+}
+
+function findNext(id) {
+    return Model.Album.findOne({
+        where: {
+            id: {
+                gt: id
+            }
+        },
+        order: [
+            ['id', 'ASC']
+        ]
+    })
+}
 
 exports.album = function (req, res, next) {
     var id = req.params.id;
@@ -84,11 +109,15 @@ exports.album = function (req, res, next) {
                 model: Model.Photo
             }]
         }),
+        findPrev(id),
+        findNext(id),
     ]).then(function (datas) {
         res.render('web/album', {
             tags: datas[0] || {},
             album: datas[1] || {},
-            title: datas[1] && datas[1].name
+            title: datas[1] && datas[1].name,
+            prevAlbum: datas[2] || {},
+            nextAlbum: datas[3] || {}
         });
     });
 };

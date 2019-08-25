@@ -13,7 +13,7 @@
     <%- include ./include/head %>
 </head>
 <body>
-<% if (album.cover || album.photos.length) { %>
+<% if (album.cover || (album.photos && album.photos.length)) { %>
 <div style="display: none"><img src="<%= album.cover || album.photos[0].middle_url %>" alt="<% album.name %>"/></div>
 <% } %>
 <%- include ./include/topbar %>
@@ -37,7 +37,7 @@
                         <a class="J_weibo" href="http://weibo.com/weixiaobeijing" target="_blank"><i class="fa fa-weibo"></i></a>
                     </div>
                 </h3>
-                <% if (album.photos.length) { %>
+                <% if (album.photos && album.photos.length) { %>
                     <% var photos = album.photos %>
                     <% photos.forEach(function(photo) { %>
                         <div class="photo-box">
@@ -63,6 +63,20 @@
                 </div>-->
                 <div class="album-intro photo-box">
                     <%- album.intro %>
+                </div>
+
+                <div style="text-align: left">
+                    <% if (prevAlbum.id) { %>
+                    <a href="/album/<%=prevAlbum.id%>" style="text-decoration: underline;">上一组：<%=prevAlbum.name%></a>
+                    <% } else { %>
+                    <span>上一组：无</span>
+                    <% }%>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <% if (nextAlbum.id) { %>
+                    <a href="/album/<%=nextAlbum.id%>" style="text-decoration: underline;">下一组：<%=nextAlbum.name%></a>
+                    <% } else { %>
+                    <span>下一组：无</span>
+                    <% }%>
                 </div>
             </div>
         </div>
