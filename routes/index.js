@@ -71,6 +71,7 @@ function findPrev(id) {
             }
         },
         order: [
+            ['seq', 'DESC'],
             ['id', 'DESC']
         ]
     })
@@ -84,6 +85,7 @@ function findNext(id) {
             }
         },
         order: [
+            ['seq', 'ASC'],
             ['id', 'ASC']
         ]
     })
