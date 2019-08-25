@@ -84,7 +84,7 @@
         var loading = false;
         var tagId = location.pathname.substring("/tag/".length) * 1;
 
-        setTimeout(function () {
+        setInterval(function () {
             var needLoadNext = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2 - window.innerHeight / 2;
             if (needLoadNext && totalPage > currentPage && !loading) {
                 loading = true;
