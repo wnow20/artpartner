@@ -84,7 +84,7 @@
         var loading = false;
         var tagId = location.pathname.substring("/tag/".length) * 1;
 
-        $(window).scroll(function () {
+        setTimeout(function () {
             var needLoadNext = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2 - window.innerHeight / 2;
             if (needLoadNext && totalPage > currentPage && !loading) {
                 loading = true;
@@ -92,7 +92,7 @@
                     type: "GET",
                     url: "/api/tag/" + tagId,
                     data: {
-                        numPerPage: 10,
+                        numPerPage: 8,
                         currentPage: currentPage + 1
                     },
                     success: function(result) {
@@ -122,7 +122,7 @@
                     }
                 });
             }
-        });
+        }, 100);
     })
 </script>
 </body>

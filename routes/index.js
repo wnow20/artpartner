@@ -30,7 +30,7 @@ exports.index = function (req, res) {
 exports.tag = function (req, res, next) {
     var id = req.params.id;
     var page = Page.gen(req, res);
-    page.setNumPerPage(10);
+    page.setNumPerPage(8);
 
     Promise.all([
         Model.Tag.findAll(),
