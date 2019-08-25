@@ -65,15 +65,15 @@
                     <%- album.intro %>
                 </div>
 
-                <div style="text-align: left">
+                <div style="text-align: left" class="photo-box">
                     <% if (prevAlbum.id) { %>
-                    <a href="/album/<%=prevAlbum.id%>" style="text-decoration: underline;">上一组：<%=prevAlbum.name%></a>
+                    <a href="/album/<%=prevAlbum.id%>" style="text-decoration: underline; color: rgba(0,0,0,.6);">上一组：<%=prevAlbum.name%></a>
                     <% } else { %>
                     <span>上一组：无</span>
                     <% }%>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <% if (nextAlbum.id) { %>
-                    <a href="/album/<%=nextAlbum.id%>" style="text-decoration: underline;">下一组：<%=nextAlbum.name%></a>
+                    <a href="/album/<%=nextAlbum.id%>" style="text-decoration: underline; color: rgba(0,0,0,.6);">下一组：<%=nextAlbum.name%></a>
                     <% } else { %>
                     <span>下一组：无</span>
                     <% }%>
