@@ -59,7 +59,7 @@
         if (!album.cover && !album.photos.length) {
             return null;
         }
-        var imageUrl = album.cover | album.photos[0].thumbnail_url;
+        var imageUrl = album.cover || album.photos[0].thumbnail_url;
         var template = '<div class="waterfull-item">' +
             '<a href="/album/${album.id}"><img src="${imageUrl}" alt="${album.name}"/></a>' +
             '<div class="waterfull-intro"><span class="waterfull-intro-inner">${album.name}</span></div>' +
