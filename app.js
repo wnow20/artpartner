@@ -21,6 +21,7 @@ res.message = function (msg, type) {
 };
 
 var routes = require('./routes');
+var apiTagRoutes = require('./routes/api/tag');
 
 var app = express();
 
@@ -85,6 +86,8 @@ app.get('/', routes.index);
 app.get('/tag/(:id)?', routes.tag);
 app.get('/album/(:id)?', routes.album);
 app.get('/cms', routes.cms);
+
+app.get('/api/tag/(:id)?', apiTagRoutes.tag);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

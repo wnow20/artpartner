@@ -41,6 +41,7 @@
                 <% if (!albums.length) {%>
                 <div class="no-photo-in-this-tag">no photo.</div>
                 <% } %>
+                <div class="last-page-placeholder" style="display: none">no more works.</div>
             </div>
         </div>
     </div>
@@ -50,6 +51,24 @@
 <script src="/public/js/masonry/masonry.pkgd.min.js"></script>
 <script src="/public/js/imagesloaded/imagesloaded.pkgd.min.js"></script>
 <script>
+    String.prototype.replaceAll = function(search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
+    function renderItem(album) {
+        if (!album.cover && !album.photos.length) {
+            return null;
+        }
+        var imageUrl = album.cover | album.photos[0].thumbnail_url;
+        var template = '<div class="waterfull-item">' +
+            '<a href="/album/${album.id}"><img src="${imageUrl}" alt="${album.name}"/></a>' +
+            '<div class="waterfull-intro"><span class="waterfull-intro-inner">${album.name}</span></div>' +
+            '</div>';
+        return template.replaceAll(/\$\{album.id\}/, album.id)
+            .replaceAll(/\$\{album.name\}/, album.name)
+            .replaceAll(/\$\{imageUrl\}/, imageUrl);
+    }
+
     $(function () {
         var J_waterfull = $('#J_waterfull');
         J_waterfull.masonry({
@@ -58,6 +77,49 @@
         });
         J_waterfull.imagesLoaded().progress( function() {
             J_waterfull.masonry('layout');
+        });
+
+        var currentPage = 1;
+        var totalPage = Math.ceil('<%= page.totalCount %>' * 1 / ('<%= page.numPerPage %>' * 1));
+        var loading = false;
+        var tagId = location.pathname.substring("/tag/".length) * 1;
+        $(window).scroll(function () {
+            var needLoadNext = document.documentElement.scrollHeight
+                - document.documentElement.scrollTop
+                - document.documentElement.clientHeight * 1.5;
+
+            if (needLoadNext <= 0 && totalPage > currentPage && !loading) {
+                loading = true;
+                $.ajax({
+                    type: "GET",
+                    url: "/api/tag/" + tagId,
+                    data: {
+                        numPerPage: 10,
+                        currentPage: currentPage + 1
+                    },
+                    success: function(result) {
+                        $.each(result, function (index, album) {
+                            var itemHtml = renderItem(album);
+                            if (itemHtml !== null) {
+                                var $item = $(itemHtml);
+                                // append items to grid
+                                J_waterfull.append( $item )
+                                // add and lay out newly appended items
+                                    .masonry( 'appended', $item );
+                            }
+                        })
+
+                        loading = false;
+                        currentPage = currentPage + 1;
+                        if (currentPage >= totalPage) {
+                            $('.last-page-placeholder').show();
+                        }
+                    },
+                    error: function () {
+                        loading = false;
+                    }
+                });
+            }
         });
     })
 </script>

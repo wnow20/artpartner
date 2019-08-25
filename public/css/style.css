@@ -416,6 +416,12 @@ ul {
     color: #999;
 }
 
+.last-page-placeholder {
+    padding-left: 10px;
+    font-size: 16px;
+    color: #999;
+}
+
 .photos-list {
     margin-top: 20px;
 }

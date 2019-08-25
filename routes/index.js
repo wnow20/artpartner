@@ -30,13 +30,14 @@ exports.index = function (req, res) {
 exports.tag = function (req, res, next) {
     var id = req.params.id;
     var page = Page.gen(req, res);
+    page.setNumPerPage(10);
 
     Promise.all([
         Model.Tag.findAll(),
         // 查询所属分类tag的全部相册,如果tag_id为空,则查询所有
         (function(id) {
             var where = id? { tag_id: id } : {};
-            return Model.Album.findAll({
+            return Model.Album.findAndCountAll({
                 where: where,
                 include: [{
                     model: Model.Photo
@@ -44,9 +45,9 @@ exports.tag = function (req, res, next) {
                 order: [
                     ['seq', 'DESC'],
                     ['id', 'DESC'],
-                ]
-                //offset: page.getOffset(),
-                //limit: page.numPerPage
+                ],
+                offset: page.getOffset(),
+                limit: page.numPerPage
             });
         }(id))
     ]).then(function (datas) {
@@ -55,7 +56,7 @@ exports.tag = function (req, res, next) {
         res.render('web/tag', {
             title: datas[0] && datas[0].name,
             tags: datas[0] || {},
-            albums: datas[1] || {},
+            albums: datas[1].rows || [],
             page: page
         });
     }).then(null, function(err) {
