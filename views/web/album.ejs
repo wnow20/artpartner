@@ -70,13 +70,13 @@
                     <% if (prevAlbum.id) { %>
                     <a href="/album/<%=prevAlbum.id%>" style="text-decoration: underline; color: rgba(0,0,0,.4);">上一组：<%=prevAlbum.name%></a>
                     <% } else { %>
-                    <span>上一组：无</span>
+                    <span style="color: rgba(0,0,0,.4);">上一组：无</span>
                     <% }%>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <% if (nextAlbum.id) { %>
                     <a href="/album/<%=nextAlbum.id%>" style="text-decoration: underline; color: rgba(0,0,0,.4);">下一组：<%=nextAlbum.name%></a>
                     <% } else { %>
-                    <span>下一组：无</span>
+                    <span style="color: rgba(0,0,0,.4);">下一组：无</span>
                     <% }%>
                 </div>
             </div>
