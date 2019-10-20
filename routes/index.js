@@ -20,7 +20,7 @@ exports.index = function (req, res) {
         limit: limit,
     }).then(function (albums) {
         res.render('web/index', {
-            title: 'HOME - WANGYI',
+            title: '万花筒 - Artascope',
             albums: albums
         });
     });
